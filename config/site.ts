@@ -10,7 +10,7 @@ export const siteConfig = {
 	links: {
 		twitter: "https://x.com/0xmhiskall",
 		github: "https://github.com/mhiskall282",
-		email: "mailto:johnokyere282@icloud.com",
+		email: "mailto:hello@johnokyere.xyz",
 		linkedin: "https://www.linkedin.com/in/johnokyere/",
 		telegram: "https://t.me/mhiskall",
 		discord: "https://discord.com/users/johnokyere",
