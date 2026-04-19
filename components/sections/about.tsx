@@ -67,7 +67,7 @@ export function About() {
 								className="text-muted-foreground group-hover/necta:text-foreground/70 group-hover/necta:-translate-y-0.5 transition-all duration-200"
 							/>
 						</a>
-						. 8× international hackathon winner.
+						. 4× international hackathon winner.
 					</span>
 				</p>
 			</section>
