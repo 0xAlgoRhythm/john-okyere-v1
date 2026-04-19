@@ -122,10 +122,10 @@ export function About() {
 			<section className="text-body text-muted-foreground text-pretty space-y-3">
 				<p>
 					I design and build <span className="text-foreground">AI-powered</span> and{" "}
-					<span className="text-foreground">on-chain systems</span> that solve real-world problems — with a focus on performance, usability, and scalability.
+					<span className="text-foreground">on-chain systems</span> that solve real-world problems, with a focus on performance, usability, and scalability.
 				</p>
 				<p>
-					Currently building{" "}
+					{/* Currently building{" "}
 					<a
 						href="https://usezenithpay.xyz"
 						target="_blank"
@@ -150,7 +150,7 @@ export function About() {
 						/>
 					</a>
 					{" "}
-					— a next-generation spend control layer for the agentic economy, enabling intelligent and programmable financial interactions.
+					— a next-generation spend control layer for the agentic economy, enabling intelligent and programmable financial interactions. */}
 					<br />
 					<span className="block mt-1">
 						Previously a Founding Engineer at{" "}
