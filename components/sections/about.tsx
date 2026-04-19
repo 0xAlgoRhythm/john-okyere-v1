@@ -151,7 +151,7 @@ export function About() {
 					</a>
 					{" "}
 					— a next-generation spend control layer for the agentic economy, enabling intelligent and programmable financial interactions. */}
-					<br />
+					{/* <br /> */}
 					<span className="block mt-1">
 						Previously a Founding Engineer at{" "}
 						<a
