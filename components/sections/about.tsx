@@ -45,20 +45,20 @@ export function About() {
 					<span className="block mt-1">
 						Previously Founding Engineer at{" "}
 						<a
-							href="https://necta-fi.vercel.app"
+							href="https://credaxis-web.vercel.app"
 							target="_blank"
 							rel="noopener noreferrer"
 							className="group/necta inline-flex items-center gap-1 mx-0.5 translate-y-0.5"
 						>
 							<Image
-								src="/icons/necta-icon.svg"
-								alt="Necta Finance"
+								src="/icons/credaxis.png"
+								alt="Credaxis"
 								width={16}
 								height={16}
 								className="rounded-sm"
 							/>
 							<span className="font-title font-medium text-[15px] text-foreground border-b border-dashed border-foreground/60 group-hover/necta:border-foreground transition-colors duration-200">
-								Necta Finance
+								Credaxis
 							</span>
 							<HugeiconsIcon
 								icon={ArrowUpRight03Icon}
