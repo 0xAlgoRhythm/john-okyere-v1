@@ -1,0 +1,147 @@
+---
+title: "How I Got Into AmaliTech NSS: From Zero Prep to Receiving Acceptance Letter"
+date: "2026-05-03"
+description: "The full story of how I applied, built a backend API from scratch, survived a FAANG-level code defence, and got accepted for the Systems Engineering track."
+tags: ["career", "fastapi", "python", "backend", "amalitech", "nss", "ghana"]
+author: "John Okyere"
+---
+
+I got accepted into AmaliTech NSS this week.
+
+AmaliTech NSS 2026/27 — Systems Engineering specialisation. After cognitive tests, a coding assessment, a take-home capstone project, and a 30-minute code walkthrough with an engineer who has interviewed at FAANG companies, I got in.
+
+This is the full story. What I built, what they asked, where I almost slipped, and what I'd tell anyone applying next year.
+
+---
+
+## Why AmaliTech
+
+I'd been here before.
+
+Last two year I did an AWS Cloud Restart Training at AmaliTech which led me to my AWS CCP certification. Architected cloud infrastructure across 30+ AWS services, built a 2TB Netflix data pipeline, and implemented CI/CD automation that cut deployment time by 75%. When that internship ended, I left with a clear picture of the kind of engineer I wanted to become.
+
+Most NSS placements are comfortable. AmaliTech is not comfortable. That's exactly why I applied.
+
+---
+
+## The Process
+
+The application has four stages. They move fast and they hire on a rolling basis — limited slots fill up before the deadline.
+
+**Stage 1 — Cognitive Reasoning Test**
+Multiple choice. Abstract reasoning, verbal reasoning, numerical reasoning. Preferred score is 26 out of 30. Think of it like a structured IQ test — pattern recognition, reading comprehension under time pressure, basic maths and ratios. I did a few practice tests online the night before. Not much preparation needed if you think clearly under pressure.
+
+**Stage 2 — Coding Assessment (CodeSignal)**
+This is where most people struggle. The coding test is DSA — Data Structures and Algorithms. Four questions, 70 minutes. Two easy, one medium, one medium-hard. Preferred score 874 out of 1200.
+
+I hadn't practiced DSA in years. I went back to basics — arrays, dictionaries, two pointers, BFS, DFS. The key insight: CodeSignal scores on correctness AND speed. Partial credit exists. Always submit something even if incomplete. I used Python for speed, C++ for low level architecturing like storage and using vectors.
+
+**Stage 3 — Take-Home Capstone Project**
+This is the real test. After passing the first two stages, I received this brief:
+
+> *Build a Dead Man's Switch API. Devices will register a monitor with a countdown timer. If the device fails to ping the API before the timer runs out, the system automatically triggers an alert.*
+
+7 days. Build it, document it, deploy it, submit a GitHub link.
+
+**Stage 4 — Code Walkthrough Interview**
+30 minutes. Share your screen. Walk through your code. Justify every decision. Answer questions about things you didn't implement. This is where they find out if you actually understand what you built.
+
+---
+
+## The Project — Pulse Check API
+
+I chose FastAPI (Python) over Django and Node.js. Three reasons:
+
+FastAPI has native async support through Python's `asyncio` library — which is exactly what I needed to run background timers without blocking the API. Django doesn't support this natively. Node.js would have worked but Python's asyncio integrates more cleanly with FastAPI's async model, and I wasn't switching languages three days before a deadline.
+
+The core problem was elegant: each device needs a countdown timer running in the background. When a heartbeat arrives, cancel the old timer, start a fresh one. When the timer hits zero — alert fires.
+
+```python
+async def start_countdown(device_id: str, timeout: int):
+    try:
+        await asyncio.sleep(timeout)
+    except asyncio.CancelledError:
+        return  # heartbeat cancelled this — device is alive
+
+    if monitors_db[device_id]["status"] == "active":
+        monitors_db[device_id]["status"] = "down"
+        fire_alert(device_id, ...)
+```
+
+The `try/except CancelledError` is the detail most people miss. Without it, every successful heartbeat prints an unhandled exception in the logs. Cancellation from a heartbeat is expected, normal behaviour — not an error. The except block makes it silent.
+
+I structured the project across six files — `main.py`, `models.py`, `database.py`, `alerts.py`, `timer.py`, and `routes/monitors.py`. Each file has one responsibility. If I want to swap the in-memory dictionary for PostgreSQL, I only touch `database.py`. If I want real email alerts instead of logging, I only touch `alerts.py`. This is called Separation of Concerns and it's one of the things they tested me on directly.
+
+Beyond the core spec, I added:
+- A pause endpoint for maintenance windows without false alarms
+- A heartbeat history log — `GET /monitors/{id}/history` — for incident observability
+- Structured logging across all modules with Python's `logging` library
+- Live deployment on Render so they could test it without cloning the repo
+
+The deployed API is at `https://pulse-check-api-9fa8.onrender.com/docs`.
+
+---
+
+## The Interview
+
+30 minutes. The interviewer had deep experience — the kind of questions he asked were FAANG-calibre.
+
+He didn't just ask what my code did. He asked why I made specific decisions and where it would break at scale.
+
+**The logging issue** — I had two console outputs firing for every alert: the critical log and a simulated email log. He called it out immediately. Redundant. Pick one — either log the alert cleanly as the spec requires, or fully implement real email with SendGrid. A half-measure that logs what an email *would* say adds noise and no value. He was right.
+
+**The pagination gap** — I was returning the full `heartbeat_history` list. He pushed back: *"If a device has been sending heartbeats for months, that list has thousands of entries. Is that a good response?"* The fix is pagination — return 20 records per page, with a `page` parameter. Plus aggregated trend data instead of raw entries, which is what actually shows you if a device is degrading.
+
+**The recovery flow** — When a device goes `down`, my implementation made it a terminal state. He asked: *"If you're handling thousands of monitors and every device that fails needs to be manually deleted and recreated, is that a good user experience?"*
+
+No. The right answer is a `POST /monitors/{id}/restart` endpoint, or better — auto-recovery. When a down device sends a heartbeat, instead of rejecting it with a 400, the system resurrects the monitor automatically, logs a `recovery` event in the history, and restarts the timer. Devices self-heal without human intervention.
+
+**The data structures question** — He asked where I used data structures and why. My answer:
+
+- `monitors_db` — dictionary, O(1) lookup by device ID
+- `active_tasks` — dictionary, O(1) access to cancel running timers
+- `heartbeat_history` — list, insertion-ordered for chronological audit log
+- `status` — string acting as a finite state machine: `active | paused | down`
+
+**The race condition** — He pointed out that when a monitor is paused, the timer cancellation isn't guaranteed if the timer is in the microsecond between finishing its sleep and checking the status. My existing guard:
+
+```python
+if monitor["status"] == "active":
+    # only fire alert if still active
+```
+
+...handles it. But the production fix is Redis TTL keys — when you pause, you delete the Redis key entirely. No key, no timer, no race condition possible.
+
+I didn't have perfect answers for everything. When he caught the redundant logging I said: *"You're right, that's a half measure. It should either be a fully implemented email service or removed entirely."* When he caught the pagination gap I said: *"The raw list is not the right data structure for trend analysis — I should return aggregated data."*
+
+Owning what's wrong and articulating the fix clearly is more important than pretending the code is perfect.
+
+---
+
+## What I'd Tell Future Applicants
+
+**Apply early.** They hire on a rolling basis. Every day you wait, slots are filling. The deadline is the end of May but people are getting offers in February, March and April.
+
+**For the coding test** — don't try to learn everything. Learn the patterns: two pointers, sliding window, BFS, DFS, frequency counting with a dictionary. That covers 80% of what shows up at this level. Use Python if you can — it's the fastest to write under pressure.
+
+**For the capstone** — structure your project properly from the start. One file with everything in it is a red flag. Separate your concerns. Use meaningful commit messages throughout — a single "Initial commit" is specifically called out as a red flag in their checklist. Deploy it live. Give them a URL they can click.
+
+**For the interview** — they are not testing whether your code is perfect. They are testing whether you understand what you built and whether you can think through problems you didn't anticipate. Talk while you code. Say *"I decided to..."* not *"I was told to..."* Own every decision.
+
+And if they catch something real — own it. Say what the fix is. That's the answer they're actually looking for.
+
+---
+
+## What's Next
+
+NSS starts this year. Systems Engineering track — backend, cloud, DevOps, cybersecurity, and Agentic AI tooling on international project teams.
+
+The gap between where I was when I started this application and where I am now is not small. I rewrote my understanding of asyncio, data structures, separation of concerns, and what production-grade code actually looks like — all in the space of a few weeks.
+
+The Pulse Check API lives at [github.com/mhiskall282/Pulse-Check-API](https://github.com/mhiskall282/Pulse-Check-API) if you want to look at the code.
+
+If you're applying next cycle — start now. The process rewards preparation, not talent.
+
+---
+
+*John Okyere is a backend and cloud engineer based in Accra, Ghana. BSc Computer Science at University of the People. Mastercard Scholar. AWS Restart Scholar. Find him at [linkedin.com/in/johnokyere](https://linkedin.com/in/johnokyere) and [github.com/mhiskall282](https://github.com/mhiskall282).*
