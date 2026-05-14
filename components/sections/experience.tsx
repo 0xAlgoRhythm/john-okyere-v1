@@ -61,7 +61,7 @@ interface ExperienceCardProps {
 	isLast: boolean
 }
 
-function ExperienceCard({
+const ExperienceCard = React.memo(function ExperienceCard({
 	role,
 	company,
 	companyHref,
@@ -80,26 +80,33 @@ function ExperienceCard({
 				{!isLast && <div className="w-px bg-border/40 flex-1 min-h-[1.5rem] mt-2" />}
 			</div>
 
-			<button
-				type="button"
-				disabled={!hasBullets}
-				className={cn("flex-1 pb-4 text-left w-full", hasBullets && "cursor-pointer")}
-				onClick={() => setIsOpen((prev) => !prev)}
-			>
-				<div className="flex flex-col gap-1">
+			<div className="flex-1 flex flex-col min-w-0">
+				<button
+					type="button"
+					disabled={!hasBullets}
+					className={cn(
+						"flex flex-col gap-1 text-left w-full transition-opacity pb-2", 
+						hasBullets ? "cursor-pointer hover:opacity-80" : "cursor-default"
+					)}
+					onClick={(e) => {
+						if (!hasBullets) return
+						e.preventDefault()
+						setIsOpen((prev) => !prev)
+					}}
+				>
 					<div className="flex items-center gap-2 font-mono text-[9px] text-cyan-500 uppercase tracking-[0.2em]">
 						<span className="opacity-50">[ENTRY_POINT]</span>
 						<span>{year}</span>
 					</div>
 					<div className="flex items-baseline justify-between gap-4">
-						<h3 className="text-item-title font-bold text-foreground">
+						<h3 className="text-item-title font-bold text-foreground truncate">
 							{company}
 						</h3>
-						<span className="text-[10px] font-mono text-muted-foreground uppercase">
+						<span className="text-[10px] font-mono text-muted-foreground uppercase shrink-0">
 							{role}
 						</span>
 					</div>
-				</div>
+				</button>
 
 				<AnimatePresence initial={false}>
 					{isOpen && hasBullets && (
@@ -107,12 +114,13 @@ function ExperienceCard({
 							initial={{ height: 0, opacity: 0 }}
 							animate={{ height: "auto", opacity: 1 }}
 							exit={{ height: 0, opacity: 0 }}
+							transition={{ duration: 0.2, ease: "easeOut" }}
 							className="overflow-hidden"
 						>
-							<ul className="mt-3 space-y-1.5 bezel bg-accent/5 p-3">
-								{bullets?.map((bullet: string) => (
+							<ul className="mt-1 mb-4 space-y-1.5 bezel bg-accent/5 p-3">
+								{bullets?.map((bullet: string, i: number) => (
 									<li
-										key={bullet}
+										key={`${bullet.slice(0, 20)}-${i}`}
 										className="text-caption text-muted-foreground leading-relaxed flex gap-3"
 									>
 										<span className="text-cyan-500 font-mono text-[10px] mt-0.5 opacity-50">
@@ -125,10 +133,10 @@ function ExperienceCard({
 						</motion.div>
 					)}
 				</AnimatePresence>
-			</button>
+			</div>
 		</div>
 	)
-}
+})
 
 export function Experience() {
 	const experiences = [...allExperiences].sort((a, b) => {
