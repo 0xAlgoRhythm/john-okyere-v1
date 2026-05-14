@@ -27,6 +27,9 @@ import {
 import { ThemeToggleIcon } from "@/components/icons";
 import { siteConfig } from "@/config/site";
 import {
+  DialogTitle,
+} from "@/components/ui/dialog";
+import {
   Tooltip,
   TooltipContent,
   TooltipTrigger,
@@ -103,138 +106,106 @@ export function Menu() {
   return (
     <>
       <Command.Dialog open={open} onOpenChange={setOpen}>
-        <Command.Input placeholder="Go to..." />
-        <Command.List>
+        <DialogTitle className="sr-only">System Command Interface</DialogTitle>
+        <div className="flex items-center gap-2 px-4 pt-4 text-[10px] font-mono text-muted-foreground uppercase tracking-[0.2em]">
+          <span className="animate-pulse">●</span>
+          <span>System Command Interface</span>
+        </div>
+        <Command.Input placeholder="Execute command..." />
+        <Command.List className="scrollbar-hide">
           {loading && (
             <Command.Loading>
-              <div className="flex items-center justify-center p-4">
+              <div className="flex items-center justify-center p-8">
                 <HugeiconsIcon
                   icon={Loading03Icon}
                   size={24}
-                  strokeWidth={2}
-                  className="animate-spin text-foreground"
+                  strokeWidth={1.5}
+                  className="animate-spin text-cyan-500"
                 />
               </div>
             </Command.Loading>
           )}
 
-          <Command.Empty>No results found.</Command.Empty>
+          <Command.Empty className="py-12 text-center text-sm text-muted-foreground font-mono">
+            COMMAND_NOT_FOUND: Search query returned 0 results.
+          </Command.Empty>
 
-          <Command.Group heading="Pages">
+          <Command.Group heading="Directories">
             <Command.Item onSelect={() => navigate("/")}>
-              <div className="flex items-center gap-2 text-foreground">
-                <HugeiconsIcon icon={Home01Icon} size={16} strokeWidth={2} />
-                <span>Home</span>
+              <div className="flex items-center gap-3 text-foreground font-mono text-sm">
+                <span className="text-muted-foreground opacity-50">01</span>
+                <HugeiconsIcon icon={Home01Icon} size={14} strokeWidth={2} />
+                <span>/root</span>
               </div>
             </Command.Item>
             <Command.Item onSelect={() => navigate("/writing")}>
-              <div className="flex items-center gap-2 text-foreground">
-                <HugeiconsIcon icon={File01Icon} size={16} strokeWidth={2} />
-                <span>Writing</span>
+              <div className="flex items-center gap-3 text-foreground font-mono text-sm">
+                <span className="text-muted-foreground opacity-50">02</span>
+                <HugeiconsIcon icon={File01Icon} size={14} strokeWidth={2} />
+                <span>/writing</span>
               </div>
             </Command.Item>
             <Command.Item onSelect={() => navigate("/work")}>
-              <div className="flex items-center gap-2 text-foreground">
-                <HugeiconsIcon icon={Folder01Icon} size={16} strokeWidth={2} />
-                <span>Work</span>
+              <div className="flex items-center gap-3 text-foreground font-mono text-sm">
+                <span className="text-muted-foreground opacity-50">03</span>
+                <HugeiconsIcon icon={Folder01Icon} size={14} strokeWidth={2} />
+                <span>/projects</span>
               </div>
             </Command.Item>
           </Command.Group>
 
-          <Command.Group heading="Resume">
+          <Command.Group heading="Assets">
             <Command.Item onSelect={() => navigate("/resume/resume.pdf")}>
-              <div className="flex items-center gap-2 text-foreground">
-                <HugeiconsIcon icon={FileDownloadIcon} size={16} strokeWidth={2} />
-                <span>Resume</span>
+              <div className="flex items-center gap-3 text-foreground font-mono text-sm">
+                <span className="text-muted-foreground opacity-50">04</span>
+                <HugeiconsIcon icon={FileDownloadIcon} size={14} strokeWidth={2} />
+                <span>resume.pdf</span>
               </div>
             </Command.Item>
           </Command.Group>
 
-          <Command.Group heading="Theme">
+          <Command.Group heading="Configuration">
             <Command.Item onSelect={toggleTheme}>
-              <div className="flex items-center gap-2 text-foreground">
-                <ThemeToggleIcon className="size-4" />
-                <span>{theme === "dark" ? "Light" : "Dark"}</span>
+              <div className="flex items-center gap-3 text-foreground font-mono text-sm">
+                <span className="text-muted-foreground opacity-50">05</span>
+                <ThemeToggleIcon className="size-3.5" />
+                <span>set_theme({theme === "dark" ? "light" : "dark"})</span>
               </div>
             </Command.Item>
           </Command.Group>
 
-          <Command.Group heading="Social Links">
+          <Command.Group heading="Network">
             <Command.Item onSelect={() => navigate(siteConfig.links.twitter)}>
-              <div className="flex items-center gap-2 text-foreground">
-                <HugeiconsIcon icon={NewTwitterIcon} size={16} strokeWidth={2} />
-                <span>X</span>
+              <div className="flex items-center gap-3 text-foreground font-mono text-sm">
+                <span className="text-muted-foreground opacity-50">06</span>
+                <HugeiconsIcon icon={NewTwitterIcon} size={14} strokeWidth={2} />
+                <span>x.com</span>
               </div>
             </Command.Item>
             <Command.Item onSelect={() => navigate(siteConfig.links.github)}>
-              <div className="flex items-center gap-2 text-foreground">
-                <HugeiconsIcon icon={Github01Icon} size={16} strokeWidth={2} />
-                <span>GitHub</span>
+              <div className="flex items-center gap-3 text-foreground font-mono text-sm">
+                <span className="text-muted-foreground opacity-50">07</span>
+                <HugeiconsIcon icon={Github01Icon} size={14} strokeWidth={2} />
+                <span>github.com</span>
               </div>
             </Command.Item>
             <Command.Item onSelect={() => navigate(siteConfig.links.linkedin)}>
-              <div className="flex items-center gap-2 text-foreground">
-                <HugeiconsIcon icon={Linkedin01Icon} size={16} strokeWidth={2} />
-                <span>LinkedIn</span>
+              <div className="flex items-center gap-3 text-foreground font-mono text-sm">
+                <span className="text-muted-foreground opacity-50">08</span>
+                <HugeiconsIcon icon={Linkedin01Icon} size={14} strokeWidth={2} />
+                <span>linkedin.com</span>
               </div>
             </Command.Item>
             <Command.Item onSelect={() => navigate(siteConfig.links.email)}>
-              <div className="flex items-center gap-2 text-foreground">
-                <HugeiconsIcon icon={Mail01Icon} size={16} strokeWidth={2} />
-                <span>Email</span>
+              <div className="flex items-center gap-3 text-foreground font-mono text-sm">
+                <span className="text-muted-foreground opacity-50">09</span>
+                <HugeiconsIcon icon={Mail01Icon} size={14} strokeWidth={2} />
+                <span>smtp.connect()</span>
               </div>
             </Command.Item>
           </Command.Group>
         </Command.List>
       </Command.Dialog>
-
-      <nav
-        className={`${
-          isHome ? "w-12" : "w-28"
-        } fixed bottom-6 left-6 top-auto z-50 md:hidden print:hidden`}
-      >
-        <div className="relative flex h-12 gap-2">
-          {!isHome && (
-            <Tooltip>
-              <TooltipTrigger asChild>
-                <Link
-                  href="/"
-                  className="absolute left-0 flex items-center justify-center size-12 rounded-full bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 hover:bg-neutral-50 dark:hover:bg-neutral-800 hover:scale-110 active:scale-90 transition-all shadow-sm will-change-transform"
-                  aria-label="Go home"
-                >
-                  <HugeiconsIcon
-                    icon={Home01Icon}
-                    size={20}
-                    strokeWidth={2}
-                    className="text-foreground"
-                  />
-                </Link>
-              </TooltipTrigger>
-              <TooltipContent side="right">Home</TooltipContent>
-            </Tooltip>
-          )}
-          <Tooltip>
-            <TooltipTrigger asChild>
-              <button
-                type="button"
-                onClick={() => setOpen((open) => !open)}
-                className={`absolute rounded-full transition-all duration-250 ease-out flex items-center justify-center size-12 bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 hover:bg-neutral-50 dark:hover:bg-neutral-800 hover:scale-110 active:scale-90 shadow-sm will-change-transform ${
-                  !isHome ? "left-14 delay-50" : "left-0 delay-300"
-                }`}
-                aria-label="Open menu"
-              >
-                <HugeiconsIcon
-                  icon={CommandHugeIcon}
-                  size={20}
-                  strokeWidth={2}
-                  className="text-foreground"
-                />
-              </button>
-            </TooltipTrigger>
-            <TooltipContent side="right">Menu</TooltipContent>
-          </Tooltip>
-        </div>
-      </nav>
     </>
   );
 }

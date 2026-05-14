@@ -33,7 +33,7 @@ export function LinesBG({ className }: GridPatternProps) {
   return (
     <div
       className={cn(
-        "relative h-10 overflow-hidden border border-dashed border-border",
+        "relative h-6 overflow-hidden border border-dashed border-border",
         "before:absolute before:-left-[100vw] before:top-0 before:h-full before:w-[200vw]",
         "before:[background-image:repeating-linear-gradient(315deg,var(--cd-edge)_0,var(--cd-edge)_1px,transparent_0,transparent_50%)]",
         "before:[background-size:10px_10px]",

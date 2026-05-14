@@ -1,220 +1,104 @@
-// "use client"
-
-// import { ArrowUpRight03Icon, Calendar03Icon, Mail01Icon } from "@hugeicons/core-free-icons"
-// import { HugeiconsIcon } from "@hugeicons/react"
-// import Image from "next/image"
-// import { siteConfig } from "@/config/site"
-
-// export function About() {
-// 	return (
-// 		<div className="space-y-5 sm:space-y-6 pt-6 pb-8 md:pb-16">
-// 			<section className="text-body text-muted-foreground text-pretty space-y-3">
-// 				<p>
-// 					I build <span className="text-foreground">AI-native</span> and{" "}
-// 					<span className="text-foreground">on-chain products</span>, with a focus on how
-// 					they work and feel.
-// 				</p>
-// 				<p>
-// 					Currently building{" "}
-// 					<a
-// 						href="https://usezenithpay.xyz"
-// 						target="_blank"
-// 						rel="noopener noreferrer"
-// 						className="group/zenithpay inline-flex items-center gap-1 mx-0.5 translate-y-0.5"
-// 					>
-// 						<Image
-// 							src="/icons/zenithpay-icon.svg"
-// 							alt="ZenithPay"
-// 							width={16}
-// 							height={16}
-// 							className="rounded-sm"
-// 						/>
-// 						<span className="font-title font-medium text-[15px] text-foreground border-b border-dashed border-foreground/60 group-hover/zenithpay:border-foreground transition-colors duration-200">
-// 							ZenithPay
-// 						</span>
-// 						<HugeiconsIcon
-// 							icon={ArrowUpRight03Icon}
-// 							size={12}
-// 							strokeWidth={2}
-// 							className="text-muted-foreground group-hover/zenithpay:text-foreground/70 group-hover/zenithpay:-translate-y-0.5 transition-all duration-200"
-// 						/>
-// 					</a>
-// 					{" "}
-// 					— the spend control layer for the agentic economy.
-// 					<br />
-// 					<span className="block mt-1">
-// 						Previously Founding Engineer at{" "}
-// 						<a
-// 							href="https://credaxis-web.vercel.app"
-// 							target="_blank"
-// 							rel="noopener noreferrer"
-// 							className="group/necta inline-flex items-center gap-1 mx-0.5 translate-y-0.5"
-// 						>
-// 							<Image
-// 								src="/icons/credaxis.png"
-// 								alt="Credaxis"
-// 								width={16}
-// 								height={16}
-// 								className="rounded-sm"
-// 							/>
-// 							<span className="font-title font-medium text-[15px] text-foreground border-b border-dashed border-foreground/60 group-hover/necta:border-foreground transition-colors duration-200">
-// 								Credaxis
-// 							</span>
-// 							<HugeiconsIcon
-// 								icon={ArrowUpRight03Icon}
-// 								size={12}
-// 								strokeWidth={2}
-// 								className="text-muted-foreground group-hover/necta:text-foreground/70 group-hover/necta:-translate-y-0.5 transition-all duration-200"
-// 							/>
-// 						</a>
-// 						. 4× international hackathon winner.
-// 					</span>
-// 				</p>
-// 			</section>
-
-// 			<div className="flex flex-wrap items-center gap-x-4 gap-y-2 pb-2">
-// 				<a
-// 					href={siteConfig.links.cal}
-// 					target="_blank"
-// 					rel="noopener noreferrer"
-// 					className="group/cal inline-flex items-center gap-1.5 text-[15px] font-title font-medium text-foreground"
-// 				>
-// 					<HugeiconsIcon
-// 						icon={Calendar03Icon}
-// 						size={15}
-// 						strokeWidth={2}
-// 						className="shrink-0 text-muted-foreground"
-// 					/>
-// 					<span className="border-b border-dashed border-foreground/60 group-hover/cal:border-foreground transition-colors duration-200">
-// 						Book a call
-// 					</span>
-// 				</a>
-// 				<span className="text-border select-none">/</span>
-// 				<a
-// 					href={siteConfig.links.email}
-// 					className="group/email inline-flex items-center gap-1.5 text-[15px] font-title font-medium text-foreground"
-// 				>
-// 					<HugeiconsIcon
-// 						icon={Mail01Icon}
-// 						size={15}
-// 						strokeWidth={2}
-// 						className="shrink-0 text-muted-foreground"
-// 					/>
-// 					<span className="border-b border-dashed border-foreground/60 group-hover/email:border-foreground transition-colors duration-200">
-// 						Send an email
-// 					</span>
-// 				</a>
-// 			</div>
-// 		</div>
-// 	)
-// }
-
-"use client"
-
-import { ArrowUpRight03Icon, Calendar03Icon, Mail01Icon } from "@hugeicons/core-free-icons"
+import * as React from "react"
+import { ArrowUpRight03Icon, Calendar03Icon, Mail01Icon, GithubIcon, Linkedin01Icon } from "@hugeicons/core-free-icons"
 import { HugeiconsIcon } from "@hugeicons/react"
 import Image from "next/image"
 import { siteConfig } from "@/config/site"
 
+import { SectionGrid, SectionTitle, SectionContent } from "@/components/ui/section-grid"
+
 export function About() {
 	return (
-		<div className="space-y-5 sm:space-y-6 pt-6 pb-8 md:pb-16">
-			<section className="text-body text-muted-foreground text-pretty space-y-3">
-				<p>
-					I design and build <span className="text-foreground">AI-powered</span> and{" "}
-					<span className="text-foreground">on-chain systems</span> that solve real-world problems, with a focus on performance, usability, and scalability.
-				</p>
-				<p>
-					{/* Currently building{" "}
+		<SectionGrid className="pt-4 pb-4">
+			<SectionTitle>Core_Briefing</SectionTitle>
+			<SectionContent className="space-y-4">
+				<div className="text-body text-muted-foreground text-pretty space-y-4 max-w-2xl">
+					<p>
+						I design and build <span className="text-foreground font-medium">AI-powered</span> and{" "}
+						<span className="text-foreground font-medium">on-chain systems</span> that solve real-world problems, with a focus on performance, usability, and scalability.
+					</p>
+					<p>
+						Currently focused on developing intelligent spend control layers and programmable financial protocols for the emerging agentic economy.
+					</p>
+					
+					<div className="bezel bg-accent/5 p-4 mt-4">
+						<div className="flex items-center gap-2 mb-2 font-mono text-[10px] text-cyan-500">
+							<span className="animate-pulse">●</span>
+							<span>PREVIOUS_ENGAGEMENT: CREDAXIS</span>
+						</div>
+						<p className="text-caption leading-relaxed italic">
+							"Built and shipped cloud and blockchain solutions across multiple domains."
+						</p>
+					</div>
+				</div>
+			</SectionContent>
+
+			<SectionTitle className="mt-12">Network_Ports</SectionTitle>
+			<SectionContent className="space-y-4">
+				<div className="flex flex-wrap items-center gap-x-6 gap-y-3">
 					<a
-						href="https://usezenithpay.xyz"
+						href={siteConfig.links.cal}
 						target="_blank"
 						rel="noopener noreferrer"
-						className="group/zenithpay inline-flex items-center gap-1 mx-0.5 translate-y-0.5"
+						className="group flex items-center gap-2 text-caption font-medium text-foreground hover:text-cyan-500 transition-colors"
 					>
-						<Image
-							src="/icons/zenithpay-icon.svg"
-							alt="ZenithPay"
-							width={16}
-							height={16}
-							className="rounded-sm"
-						/>
-						<span className="font-title font-medium text-[15px] text-foreground border-b border-dashed border-foreground/60 group-hover/zenithpay:border-foreground transition-colors duration-200">
-							ZenithPay
-						</span>
 						<HugeiconsIcon
-							icon={ArrowUpRight03Icon}
-							size={12}
+							icon={Calendar03Icon}
+							size={14}
 							strokeWidth={2}
-							className="text-muted-foreground group-hover/zenithpay:text-foreground/70 group-hover/zenithpay:-translate-y-0.5 transition-all duration-200"
+							className="text-muted-foreground group-hover:text-cyan-500"
 						/>
+						<span className="border-b border-border group-hover:border-cyan-500/50 transition-colors">
+							Book a call
+						</span>
 					</a>
-					{" "}
-					— a next-generation spend control layer for the agentic economy, enabling intelligent and programmable financial interactions. */}
-					{/* <br /> */}
-					<span className="block mt-1">
-						Previously a Founding Engineer at{" "}
-						<a
-							href="https://credaxis-web.vercel.app"
-							target="_blank"
-							rel="noopener noreferrer"
-							className="group/necta inline-flex items-center gap-1 mx-0.5 translate-y-0.5"
-						>
-							<Image
-								src="/icons/credaxis.png"
-								alt="Credaxis"
-								width={16}
-								height={16}
-								className="rounded-sm"
-							/>
-							<span className="font-title font-medium text-[15px] text-foreground border-b border-dashed border-foreground/60 group-hover/necta:border-foreground transition-colors duration-200">
-								Credaxis
-							</span>
-							<HugeiconsIcon
-								icon={ArrowUpRight03Icon}
-								size={12}
-								strokeWidth={2}
-								className="text-muted-foreground group-hover/necta:text-foreground/70 group-hover/necta:-translate-y-0.5 transition-all duration-200"
-							/>
-						</a>
-						. I’ve built and shipped cloud and blockchain solutions across multiple domains, and I’m a 4× international hackathon winner.
-					</span>
-				</p>
-			</section>
-
-			<div className="flex flex-wrap items-center gap-x-4 gap-y-2 pb-2">
-				<a
-					href={siteConfig.links.cal}
-					target="_blank"
-					rel="noopener noreferrer"
-					className="group/cal inline-flex items-center gap-1.5 text-[15px] font-title font-medium text-foreground"
-				>
-					<HugeiconsIcon
-						icon={Calendar03Icon}
-						size={15}
-						strokeWidth={2}
-						className="shrink-0 text-muted-foreground"
-					/>
-					<span className="border-b border-dashed border-foreground/60 group-hover/cal:border-foreground transition-colors duration-200">
-						Book a call
-					</span>
-				</a>
-				<span className="text-border select-none">/</span>
-				<a
-					href={siteConfig.links.email}
-					className="group/email inline-flex items-center gap-1.5 text-[15px] font-title font-medium text-foreground"
-				>
-					<HugeiconsIcon
-						icon={Mail01Icon}
-						size={15}
-						strokeWidth={2}
-						className="shrink-0 text-muted-foreground"
-					/>
-					<span className="border-b border-dashed border-foreground/60 group-hover/email:border-foreground transition-colors duration-200">
-						Send an email
-					</span>
-				</a>
-			</div>
-		</div>
+					<a
+						href={siteConfig.links.email}
+						className="group flex items-center gap-2 text-caption font-medium text-foreground hover:text-emerald-500 transition-colors"
+					>
+						<HugeiconsIcon
+							icon={Mail01Icon}
+							size={14}
+							strokeWidth={2}
+							className="text-muted-foreground group-hover:text-emerald-500"
+						/>
+						<span className="border-b border-border group-hover:border-emerald-500/50 transition-colors">
+							Send an email
+						</span>
+					</a>
+					<a
+						href={siteConfig.links.github}
+						target="_blank"
+						rel="noopener noreferrer"
+						className="group flex items-center gap-2 text-caption font-medium text-foreground hover:text-cyan-500 transition-colors"
+					>
+						<HugeiconsIcon
+							icon={GithubIcon}
+							size={14}
+							strokeWidth={2}
+							className="text-muted-foreground group-hover:text-cyan-500"
+						/>
+						<span className="border-b border-border group-hover:border-cyan-500/50 transition-colors">
+							GitHub
+						</span>
+					</a>
+					<a
+						href={siteConfig.links.linkedin}
+						target="_blank"
+						rel="noopener noreferrer"
+						className="group flex items-center gap-2 text-caption font-medium text-foreground hover:text-cyan-500 transition-colors"
+					>
+						<HugeiconsIcon
+							icon={Linkedin01Icon}
+							size={14}
+							strokeWidth={2}
+							className="text-muted-foreground group-hover:text-cyan-500"
+						/>
+						<span className="border-b border-border group-hover:border-cyan-500/50 transition-colors">
+							LinkedIn
+						</span>
+					</a>
+				</div>
+			</SectionContent>
+		</SectionGrid>
 	)
 }

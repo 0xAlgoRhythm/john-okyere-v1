@@ -6,18 +6,23 @@ const ClientDither = () => {
   const { theme } = useTheme();
 
   // Theme-aware colors
-  const waveColor = theme === 'dark'
-    ? [0.11, 0.11, 0.12] as [number, number, number]  // Dark theme
-    : [0.8, 0.8, 0.9] as [number, number, number]; // Light theme
+	const waveColor =
+		theme === "dark"
+			? ([0.1, 0.4, 0.5] as [number, number, number]) // Electric Cyan-inspired
+			: ([0.4, 0.4, 0.5] as [number, number, number]) // Muted slate
 
-  const backgroundColor = theme === 'dark'
-    ? [0.0, 0.0, 0.0] as [number, number, number]  // Black background for dark theme
-    : [1.0, 1.0, 1.0] as [number, number, number]; // White background for light theme
+	const backgroundColor =
+		theme === "dark"
+			? ([0.04, 0.04, 0.05] as [number, number, number]) // Obsidian base
+			: ([0.98, 0.98, 1.0] as [number, number, number]) // Clean white
 
-  return (
-    <div className="w-full h-screen fixed left-0 top-0 dark:opacity-20 opacity-10 pointer-events-none" style={{ zIndex: -1 }}>
-      <Dither
-        waveColor={waveColor}
+	return (
+		<div
+			className="fixed left-0 top-0 h-screen w-full pointer-events-none opacity-20 dark:opacity-30"
+			style={{ zIndex: -1 }}
+		>
+			<Dither
+				waveColor={waveColor}
         backgroundColor={backgroundColor}
         disableAnimation={false}
         enableMouseInteraction={true}

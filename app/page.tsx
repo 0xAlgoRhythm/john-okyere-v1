@@ -5,17 +5,22 @@ import { About } from "@/components/sections/about"
 import { Highlights } from "@/components/sections/highlights"
 import { SelectedWork } from "@/components/sections/selected-work"
 import { Writing } from "@/components/sections/writing"
+import { siteConfig } from "@/config/site"
 
 export default function Home() {
 	return (
-		<section className="container py-6 md:py-8">
-			<Header name="John Okyere" title="Software Engineer" isActive={false} />
+		<div className="px-6 md:px-10 space-y-6 md:space-y-8">
+			<Header
+				name={siteConfig.name}
+				title={siteConfig.title}
+				isActive={true}
+			/>
 			<About />
 			<SelectedWork />
 			<Experience />
 			<Writing />
 			<Awards />
 			<Highlights />
-		</section>
+		</div>
 	)
 }

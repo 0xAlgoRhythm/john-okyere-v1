@@ -1,153 +1,130 @@
 import {
-  ArrowRight02Icon,
-  Github01Icon,
-  Link01Icon,
-} from "@hugeicons/core-free-icons";
-import { SubPageNav } from "@/components/sections/sub-page-nav";
-import { HugeiconsIcon } from "@hugeicons/react";
-import { allWorks } from "content-collections";
-import Image from "next/image";
-import Link from "next/link";
-import { Badge } from "@/components/ui/badge";
-import { getTechIcon } from "@/components/icons";
+	ArrowRight02Icon,
+	Github01Icon,
+	Link01Icon,
+} from "@hugeicons/core-free-icons"
+import { HugeiconsIcon } from "@hugeicons/react"
+import { allWorks } from "content-collections"
+import Image from "next/image"
+import Link from "next/link"
+import { Badge } from "@/components/ui/badge"
+import { getTechIcon } from "@/components/icons"
 
 export default function WorkPage() {
-  const sortedProjects = [...allWorks].sort((a, b) => a.sort - b.sort);
+	const sortedProjects = [...allWorks].sort((a, b) => a.sort - b.sort)
 
-  return (
-    <div className="container py-6 md:py-8">
-      <section className="pb-8 sm:pb-10">
-        <div className="flex items-center justify-between mb-4">
-          <Link
-            href="/"
-            className="text-caption text-muted-foreground font-medium no-underline hover:text-foreground transition-colors duration-200"
-          >
-            <span className="text-muted-foreground/50">~</span> Home
-          </Link>
-          <SubPageNav />
-        </div>
-        <h1 className="text-[1.625rem] leading-tight font-display font-medium text-foreground mb-2">
-          All Projects
-        </h1>
-        <p className="text-body text-muted-foreground">
-          A curated record of my work, experiments, and shipped projects.
-        </p>
-      </section>
+	return (
+		<div className="px-6 md:px-10 py-6 md:py-8">
+			<section className="pb-10 border-b border-border/40 mb-10">
+				<div className="flex items-center justify-between mb-8">
+					<div className="flex items-center gap-2 font-mono text-[10px] tracking-[0.2em] text-muted-foreground uppercase">
+						<span className="opacity-50">~</span>
+						<Link href="/" className="hover:text-foreground transition-colors">ROOT</Link>
+						<span className="opacity-50">/</span>
+						<span>PROJECTS</span>
+					</div>
+				</div>
+				
+				<div className="space-y-3">
+					<h1 className="text-heading md:text-[42px] font-bold tracking-tight text-foreground">
+						Production_Record
+					</h1>
+					<p className="text-body text-muted-foreground max-w-xl">
+						A high-density archive of engineered systems, cloud infrastructure, and blockchain protocol research.
+					</p>
+				</div>
+			</section>
 
-      <div className="space-y-6 pb-8">
-        {sortedProjects.map((project) => (
-          <div
-            key={project._meta.path}
-            className="group border border-dashed border-border/70 rounded-lg p-4 sm:p-5 transition-all duration-200 hover:border-border/90 hover:bg-muted/30"
-          >
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
-              {project.image && (
-                <Link
-                  href={`/work/${project._meta.path}`}
-                  className="group/image relative block overflow-hidden rounded-lg border border-dashed border-border/70"
-                >
-                  <Image
-                    src={project.image}
-                    alt={project.title}
-                    width={600}
-                    height={400}
-                    sizes="(max-width: 768px) 100vw, 50vw"
-                    className="rounded-lg w-full aspect-video object-cover transition-transform duration-300 ease-out will-change-transform group-hover/image:scale-110"
-                  />
-                  <div className="pointer-events-none absolute inset-0 bg-foreground/5 opacity-0 transition-opacity duration-300 ease-out group-hover/image:opacity-100" />
-                </Link>
-              )}
+			<div className="space-y-12 pb-16">
+				{sortedProjects.map((project, index) => (
+					<div
+						key={project._meta.path}
+						className="group grid grid-cols-1 md:grid-cols-12 gap-8 items-start"
+					>
+						<div className="md:col-span-1 hidden md:flex flex-col items-center gap-2 pt-1 font-mono text-[10px] text-muted-foreground opacity-30">
+							<span>{index.toString().padStart(2, "0")}</span>
+							<div className="w-px bg-border/40 flex-1 min-h-[100px]" />
+						</div>
 
-              <div className="flex flex-col justify-center">
-                <div className="flex items-center gap-2 mb-1.5">
-                  <h2 className="text-item-title font-title font-medium text-foreground">
-                    {project.title}
-                  </h2>
-                  <a
-                    href={project.href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    aria-label={`Visit ${project.title}`}
-                    className="text-muted-foreground hover:text-foreground transition-colors duration-200"
-                  >
-                    <HugeiconsIcon
-                      icon={Link01Icon}
-                      size={14}
-                      strokeWidth={2}
-                    />
-                  </a>
-                  {project.source && (
-                    <a
-                      href={project.source}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      aria-label={`${project.title} source code`}
-                      className="text-muted-foreground hover:text-foreground transition-colors duration-200"
-                    >
-                      <HugeiconsIcon
-                        icon={Github01Icon}
-                        size={14}
-                        strokeWidth={2}
-                      />
-                    </a>
-                  )}
-                </div>
+						<div className="md:col-span-11 grid grid-cols-1 lg:grid-cols-2 gap-8">
+							{project.image && (
+								<Link
+									href={`/work/${project._meta.path}`}
+									className="block bezel bg-accent/5 overflow-hidden hover:border-cyan-500/50 hover:shadow-glow-cyan transition-all duration-500 group/image"
+								>
+									<Image
+										src={project.image}
+										alt={project.title}
+										width={600}
+										height={400}
+										className="w-full aspect-video object-cover grayscale group-hover/image:grayscale-0 group-hover/image:scale-105 transition-all duration-700"
+									/>
+									<div className="p-3 border-t border-border/20 bg-background/50 flex justify-between items-center">
+										<span className="font-mono text-[9px] text-cyan-500 uppercase tracking-widest">
+											[PREVIEW_ACTIVE]
+										</span>
+										<HugeiconsIcon icon={ArrowRight02Icon} size={12} className="text-muted-foreground group-hover/image:text-cyan-500 transition-colors" />
+									</div>
+								</Link>
+							)}
 
-                <p className="text-caption text-muted-foreground leading-relaxed mb-3">
-                  {project.description}
-                </p>
+							<div className="flex flex-col space-y-4">
+								<div className="space-y-2">
+									<div className="flex items-center gap-2 font-mono text-[9px] text-emerald-500 uppercase">
+										<span>STATUS:</span>
+										<span className="font-bold tracking-widest">{project.status}</span>
+									</div>
+									<h2 className="text-heading font-bold text-foreground leading-tight">
+										{project.title}
+									</h2>
+								</div>
 
-                <Link
-                  href={`/work/${project._meta.path}`}
-                  className="group/cs inline-flex items-center gap-1 text-caption font-medium text-foreground mb-3"
-                >
-                  <span className="border-b border-dashed border-foreground/60 group-hover/cs:border-foreground transition-colors duration-200">
-                    View case study
-                  </span>
-                  <HugeiconsIcon
-                    icon={ArrowRight02Icon}
-                    size={13}
-                    strokeWidth={2}
-                    className="shrink-0 group-hover/cs:-translate-y-0.5 group-hover/cs:translate-x-0.5 transition-transform duration-200"
-                  />
-                </Link>
+								<p className="text-body text-muted-foreground leading-relaxed">
+									{project.description}
+								</p>
 
-                {project.stack && project.stack.length > 0 && (
-                  <div className="flex flex-wrap gap-1.5">
-                    {project.stack.map((tech) => {
-                      const icon = getTechIcon(tech);
-                      return (
-                        <Badge
-                          key={tech}
-                          variant="outline"
-                          className="rounded-sm font-normal text-small px-2.5 py-0.5 gap-1.5"
-                        >
-                          {icon?.logoUrl && (
-                            <img
-                              src={icon.logoUrl}
-                              alt={tech}
-                              width={12}
-                              height={12}
-                              className={`shrink-0 object-contain ${icon.invertInDarkMode ? "dark:invert" : ""} ${icon.invertInLightMode ? "invert dark:invert-0" : ""}`}
-                            />
-                          )}
-                          {tech}
-                        </Badge>
-                      );
-                    })}
-                  </div>
-                )}
-              </div>
-            </div>
-          </div>
-        ))}
+								<div className="flex flex-wrap gap-2">
+									{project.stack?.map((tech) => (
+										<span
+											key={tech}
+											className="px-2 py-0.5 bezel bg-accent/5 text-[9px] font-mono text-foreground uppercase tracking-tight"
+										>
+											{tech}
+										</span>
+									))}
+								</div>
 
-        {sortedProjects.length === 0 && (
-          <div className="text-center py-12 text-muted-foreground">
-            <p>No work yet. Check back soon!</p>
-          </div>
-        )}
-      </div>
-    </div>
-  );
+								<div className="flex items-center gap-4 pt-2">
+									<a
+										href={project.href}
+										target="_blank"
+										rel="noopener noreferrer"
+										className="bezel px-4 py-1.5 bg-foreground text-background text-[10px] font-mono font-bold uppercase tracking-widest hover:bg-cyan-500 transition-colors"
+									>
+										Live_Deploy
+									</a>
+									{project.source && (
+										<a
+											href={project.source}
+											target="_blank"
+											rel="noopener noreferrer"
+											className="bezel px-4 py-1.5 text-foreground text-[10px] font-mono font-bold uppercase tracking-widest hover:border-emerald-500 transition-colors"
+										>
+											Source_Code
+										</a>
+									)}
+								</div>
+							</div>
+						</div>
+					</div>
+				))}
+
+				{sortedProjects.length === 0 && (
+					<div className="bezel p-12 text-center text-muted-foreground font-mono">
+						<p>QUERY_EMPTY: No production records found in current database.</p>
+					</div>
+				)}
+			</div>
+		</div>
+	)
 }

@@ -1,12 +1,13 @@
 import type { Metadata, Viewport } from "next"
-import { Instrument_Serif, Inter, Outfit } from "next/font/google"
+import { Space_Grotesk, Inter, JetBrains_Mono } from "next/font/google"
 import "./globals.css"
 import { ThemeProvider } from "next-themes"
 import { Menu } from "@/components/sections/menu"
+import { SystemBar } from "@/components/sections/system-bar"
 import { ImageViewer } from "@/components/shells/image-viewer"
 import { siteConfig } from "@/config/site"
 import { Footer } from "@/components/ui/footer"
-import { DashedVerticalLines } from "@/components/ui/grid-patterns"
+import { MouseGlow } from "@/components/ui/mouse-glow"
 import { ProgressiveBlur } from "@/components/ui/progressive-blur"
 import ClientDither from "@/components/dither/client-dither"
 
@@ -15,15 +16,14 @@ const inter = Inter({
 	subsets: ["latin"],
 })
 
-const outfit = Outfit({
-	variable: "--font-outfit",
+const mono = JetBrains_Mono({
+	variable: "--font-mono",
 	subsets: ["latin"],
 })
 
-const instrumentSerif = Instrument_Serif({
-	variable: "--font-instrument-serif",
+const spaceGrotesk = Space_Grotesk({
+	variable: "--font-space-grotesk",
 	subsets: ["latin"],
-	weight: ["400"],
 })
 
 export const metadata: Metadata = {
@@ -96,9 +96,12 @@ export default function RootLayout({
 	return (
 		<html lang="en" suppressHydrationWarning>
 			<body
-				className={`${inter.variable} ${outfit.variable} ${instrumentSerif.variable} min-h-screen antialiased font-sans noise-overlay`}
+				className={`${inter.variable} ${mono.variable} ${spaceGrotesk.variable} min-h-screen antialiased font-sans noise-overlay selection:bg-cyan-500/30`}
 			>
 				<ThemeProvider attribute="class" defaultTheme="dark" disableTransitionOnChange>
+					<div className="scanline-effect" />
+					<div className="vignette" />
+					<MouseGlow />
 					<ClientDither />
 					<ProgressiveBlur
 						className="pointer-events-none z-[500] fixed bottom-0 w-full h-20 hidden md:block"
@@ -106,10 +109,11 @@ export default function RootLayout({
 						blurIntensity={0.6}
 					/>
 					<Menu />
-					<DashedVerticalLines className="max-w-[52rem] mx-auto pt-6 sm:pt-8">
-						<main className="w-full flex-1 pt-2 pb-2 sm:pt-4 sm:pb-4">{children}</main>
+					<div className="max-w-[52rem] mx-auto min-h-screen border-x border-border/40 bg-background/50 relative shadow-[0_0_50px_-12px_rgba(0,0,0,0.3)] dark:shadow-[0_0_50px_-12px_rgba(0,0,0,0.5)]">
+						<SystemBar />
+						<main className="w-full flex-1 pt-4 pb-4 sm:pt-6 sm:pb-6">{children}</main>
 						<Footer />
-					</DashedVerticalLines>
+					</div>
 					<ImageViewer />
 				</ThemeProvider>
 			</body>
