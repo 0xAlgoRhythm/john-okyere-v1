@@ -25,9 +25,8 @@ export function Writing() {
 
 	return (
 		<SectionGrid>
-			<SectionTitle>
-				<div className="flex items-center justify-between w-full">
-					<span>Transmission_Buffer</span>
+			<SectionTitle
+				action={
 					<Link
 						href="/writing"
 						className="text-[10px] font-mono text-muted-foreground hover:text-emerald-500 uppercase tracking-widest transition-colors flex items-center gap-1.5 group font-normal"
@@ -35,7 +34,9 @@ export function Writing() {
 						<span>Full_Database</span>
 						<HugeiconsIcon icon={ArrowUpRight03Icon} size={12} className="group-hover:-translate-y-0.5 transition-transform" />
 					</Link>
-				</div>
+				}
+			>
+				Transmission_Buffer
 			</SectionTitle>
 			<SectionContent>
 				<div className="flex flex-col bezel bg-emerald-500/[0.02] divide-y divide-border/40">

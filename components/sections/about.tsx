@@ -9,95 +9,48 @@ import { SectionGrid, SectionTitle, SectionContent } from "@/components/ui/secti
 
 export function About() {
 	return (
-		<SectionGrid className="pt-4 pb-4">
-			<SectionTitle>Core_Briefing</SectionTitle>
-			<SectionContent className="space-y-4">
-				<div className="text-body text-muted-foreground text-pretty space-y-4 max-w-2xl">
-					<p>
-						I design and build <span className="text-foreground font-medium">AI-powered</span> and{" "}
-						<span className="text-foreground font-medium">on-chain systems</span> that solve real-world problems, with a focus on performance, usability, and scalability.
-					</p>
-					<p>
-						Currently focused on developing intelligent spend control layers and programmable financial protocols for the emerging agentic economy.
-					</p>
-					
-					<div className="bezel bg-accent/5 p-4 mt-4">
-						<div className="flex items-center gap-2 mb-2 font-mono text-[10px] text-cyan-500">
+		<SectionGrid className="pt-0 pb-2">
+			<SectionContent className="space-y-6">
+				<div className="flex flex-col gap-6">
+					<div className="text-[15px] text-muted-foreground text-pretty space-y-4 max-w-2xl leading-relaxed">
+						<p>
+							I design and build <span className="text-foreground font-medium">AI-powered</span> and{" "}
+							<span className="text-foreground font-medium">on-chain systems</span> that solve real-world problems, with a focus on performance and scalability.
+						</p>
+						
+						<div className="flex flex-wrap items-center gap-x-5 gap-y-2 mt-2">
+							<a
+								href={siteConfig.links.cal}
+								target="_blank"
+								rel="noopener noreferrer"
+								className="group flex items-center gap-2 text-[11px] font-mono font-bold text-foreground hover:text-cyan-500 transition-all duration-300"
+							>
+								<div className="size-5 bezel flex items-center justify-center bg-accent/5 group-hover:bg-cyan-500/10 group-hover:border-cyan-500/50 transition-all">
+									<HugeiconsIcon icon={Calendar03Icon} size={12} strokeWidth={2} className="text-muted-foreground group-hover:text-cyan-500" />
+								</div>
+								<span className="border-b border-border group-hover:border-cyan-500/50 uppercase tracking-widest">Book_Call</span>
+							</a>
+							<a
+								href={siteConfig.links.email}
+								className="group flex items-center gap-2 text-[11px] font-mono font-bold text-foreground hover:text-emerald-500 transition-all duration-300"
+							>
+								<div className="size-5 bezel flex items-center justify-center bg-accent/5 group-hover:bg-emerald-500/10 group-hover:border-emerald-500/50 transition-all">
+									<HugeiconsIcon icon={Mail01Icon} size={12} strokeWidth={2} className="text-muted-foreground group-hover:text-emerald-500" />
+								</div>
+								<span className="border-b border-border group-hover:border-emerald-500/50 uppercase tracking-widest">Send_Email</span>
+							</a>
+						</div>
+					</div>
+
+					<div className="bezel bg-accent/5 p-3 max-w-xl">
+						<div className="flex items-center gap-2 mb-1.5 font-mono text-[9px] text-cyan-500">
 							<span className="animate-pulse">●</span>
 							<span>PREVIOUS_ENGAGEMENT: CREDAXIS</span>
 						</div>
-						<p className="text-caption leading-relaxed italic">
+						<p className="text-[12px] leading-relaxed italic text-muted-foreground">
 							"Built and shipped cloud and blockchain solutions across multiple domains."
 						</p>
 					</div>
-				</div>
-			</SectionContent>
-
-			<SectionTitle className="mt-12">Network_Ports</SectionTitle>
-			<SectionContent className="space-y-4">
-				<div className="flex flex-wrap items-center gap-x-6 gap-y-3">
-					<a
-						href={siteConfig.links.cal}
-						target="_blank"
-						rel="noopener noreferrer"
-						className="group flex items-center gap-2 text-caption font-medium text-foreground hover:text-cyan-500 transition-colors"
-					>
-						<HugeiconsIcon
-							icon={Calendar03Icon}
-							size={14}
-							strokeWidth={2}
-							className="text-muted-foreground group-hover:text-cyan-500"
-						/>
-						<span className="border-b border-border group-hover:border-cyan-500/50 transition-colors">
-							Book a call
-						</span>
-					</a>
-					<a
-						href={siteConfig.links.email}
-						className="group flex items-center gap-2 text-caption font-medium text-foreground hover:text-emerald-500 transition-colors"
-					>
-						<HugeiconsIcon
-							icon={Mail01Icon}
-							size={14}
-							strokeWidth={2}
-							className="text-muted-foreground group-hover:text-emerald-500"
-						/>
-						<span className="border-b border-border group-hover:border-emerald-500/50 transition-colors">
-							Send an email
-						</span>
-					</a>
-					<a
-						href={siteConfig.links.github}
-						target="_blank"
-						rel="noopener noreferrer"
-						className="group flex items-center gap-2 text-caption font-medium text-foreground hover:text-cyan-500 transition-colors"
-					>
-						<HugeiconsIcon
-							icon={GithubIcon}
-							size={14}
-							strokeWidth={2}
-							className="text-muted-foreground group-hover:text-cyan-500"
-						/>
-						<span className="border-b border-border group-hover:border-cyan-500/50 transition-colors">
-							GitHub
-						</span>
-					</a>
-					<a
-						href={siteConfig.links.linkedin}
-						target="_blank"
-						rel="noopener noreferrer"
-						className="group flex items-center gap-2 text-caption font-medium text-foreground hover:text-cyan-500 transition-colors"
-					>
-						<HugeiconsIcon
-							icon={Linkedin01Icon}
-							size={14}
-							strokeWidth={2}
-							className="text-muted-foreground group-hover:text-cyan-500"
-						/>
-						<span className="border-b border-border group-hover:border-cyan-500/50 transition-colors">
-							LinkedIn
-						</span>
-					</a>
 				</div>
 			</SectionContent>
 		</SectionGrid>

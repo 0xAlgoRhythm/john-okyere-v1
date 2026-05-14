@@ -15,9 +15,8 @@ export function SelectedWork() {
 
 	return (
 		<SectionGrid>
-			<SectionTitle>
-				<div className="flex items-center justify-between w-full">
-					<span>Project_Deployment_Log</span>
+			<SectionTitle
+				action={
 					<Link
 						href="/work"
 						className="text-[10px] font-mono text-muted-foreground hover:text-cyan-500 uppercase tracking-widest transition-colors flex items-center gap-1.5 group font-normal"
@@ -25,7 +24,9 @@ export function SelectedWork() {
 						<span>View_All</span>
 						<HugeiconsIcon icon={ArrowUpRight03Icon} size={12} className="group-hover:-translate-y-0.5 transition-transform" />
 					</Link>
-				</div>
+				}
+			>
+				Project_Deployment_Log
 			</SectionTitle>
 			<SectionContent>
 				<div className="grid grid-cols-1 md:grid-cols-2 gap-4">

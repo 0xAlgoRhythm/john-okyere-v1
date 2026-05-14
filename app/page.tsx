@@ -10,7 +10,7 @@ import { siteConfig } from "@/config/site"
 
 export default function Home() {
 	return (
-		<div className="px-6 md:px-10 space-y-6 md:space-y-8">
+		<div className="px-6 md:px-10 space-y-4 md:space-y-6">
 			<Header
 				name={siteConfig.name}
 				title={siteConfig.title}
