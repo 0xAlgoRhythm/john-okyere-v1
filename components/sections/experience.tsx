@@ -51,6 +51,16 @@ function CompanyIcon({ company, href }: { company: string; href?: string }) {
 	return <div className={containerClass}>{content}</div>
 }
 
+interface ExperienceCardProps {
+	role: string
+	company: string
+	companyHref?: string
+	year: string
+	bullets?: string[]
+	isFirst: boolean
+	isLast: boolean
+}
+
 function ExperienceCard({
 	role,
 	company,
@@ -59,7 +69,7 @@ function ExperienceCard({
 	bullets,
 	isFirst,
 	isLast,
-}: any) {
+}: ExperienceCardProps) {
 	const hasBullets = bullets && bullets.length > 0
 	const [isOpen, setIsOpen] = useState(isFirst && hasBullets)
 
@@ -74,7 +84,7 @@ function ExperienceCard({
 				type="button"
 				disabled={!hasBullets}
 				className={cn("flex-1 pb-4 text-left w-full", hasBullets && "cursor-pointer")}
-				onClick={() => setIsOpen((prev) => !prev)}
+				onClick={() => setIsOpen((prev: boolean) => !prev)}
 			>
 				<div className="flex flex-col gap-1">
 					<div className="flex items-center gap-2 font-mono text-[9px] text-cyan-500 uppercase tracking-[0.2em]">
