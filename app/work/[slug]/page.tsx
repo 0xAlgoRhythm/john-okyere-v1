@@ -1,3 +1,4 @@
+import React from "react"
 import { Github01Icon, GlobalIcon } from "@hugeicons/core-free-icons"
 import { HugeiconsIcon } from "@hugeicons/react"
 import { allWorks } from "content-collections"

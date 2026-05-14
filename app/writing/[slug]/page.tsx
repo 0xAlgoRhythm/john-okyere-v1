@@ -1,3 +1,4 @@
+import React from "react"
 import { allWritings } from "content-collections"
 import type { Metadata } from "next"
 import Image from "next/image"

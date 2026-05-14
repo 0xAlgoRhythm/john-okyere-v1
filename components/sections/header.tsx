@@ -6,6 +6,7 @@ import { motion } from "framer-motion"
 import { GithubIcon, NewTwitterIcon, Linkedin01Icon, TelegramIcon, Mail01Icon } from "@hugeicons/core-free-icons"
 import { HugeiconsIcon } from "@hugeicons/react"
 import { siteConfig } from "@/config/site"
+import { CommandLine } from "@/components/ui/command-line"
 
 interface HeaderProps {
 	name: string
@@ -59,6 +60,10 @@ export function Header({ name, title, isActive }: HeaderProps) {
 							</span>
 						</div>
 					)}
+				</div>
+
+				<div className="mt-2 pl-4 border-l border-border/20">
+					<CommandLine />
 				</div>
 			</motion.div>
 

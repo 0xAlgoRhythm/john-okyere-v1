@@ -2,13 +2,14 @@
 
 import Autoplay from "embla-carousel-autoplay"
 import Image from "next/image"
-import { useState } from "react"
+import React, { useState } from "react"
 import {
 	Carousel,
 	CarouselContent,
 	CarouselItem,
 } from "@/components/ui/carousel"
 import { useImageStore } from "@/lib/store/use-image"
+import { cn } from "@/lib/utils"
 import { SectionGrid, SectionTitle, SectionContent } from "@/components/ui/section-grid"
 
 const HIGHLIGHTS = [
@@ -142,39 +143,58 @@ const HIGHLIGHTS = [
 	},
 ]
 
-function HighlightImage({ src, alt, index }: { src: string; alt: string; index: number }) {
+const HighlightImage = React.memo(function HighlightImage({ 
+	src, 
+	alt, 
+	index 
+}: { 
+	src: string; 
+	alt: string; 
+	index: number 
+}) {
 	const [isLoading, setIsLoading] = useState(true)
-	const { setSelectedImage, setDialogOpen } = useImageStore()
+	// Use selective selectors to prevent re-rendering when other store values change
+	const setSelectedImage = useImageStore((state) => state.setSelectedImage)
+	const setDialogOpen = useImageStore((state) => state.setDialogOpen)
+	const [isPending, startTransition] = React.useTransition()
 
 	function handleClick() {
-		setSelectedImage(src)
-		setDialogOpen(true)
+		// Use startTransition to defer the heavy Dialog opening logic
+		startTransition(() => {
+			setSelectedImage(src)
+			setDialogOpen(true)
+		})
 	}
 
 	return (
 		<button
 			type="button"
-			className="w-full bezel group/img bg-background/50 overflow-hidden cursor-pointer hover:border-cyan-500/50 transition-colors duration-300"
+			className={cn(
+				"w-full bezel group/img bg-background/50 overflow-hidden cursor-pointer hover:border-cyan-500/50 transition-colors duration-300 outline-none",
+				isPending && "opacity-70"
+			)}
 			onClick={handleClick}
 			aria-label={`View ${alt}`}
 		>
 			<div className="absolute top-2 right-2 z-10 font-mono text-[8px] text-muted-foreground bg-background/80 px-1 py-0.5 bezel">
 				IMG_{index.toString().padStart(3, "0")}
 			</div>
-			<Image
-				src={src}
-				alt={alt}
-				width={800}
-				height={600}
-				className="w-full h-auto aspect-[4/3] object-cover grayscale group-hover/img:grayscale-0 group-hover/img:scale-105 transition-all duration-700"
-				style={{
-					WebkitFilter: isLoading ? "blur(8px)" : "none",
-				}}
-				onLoad={() => setIsLoading(false)}
-			/>
+			<div className="relative w-full h-auto aspect-[4/3] overflow-hidden">
+				<Image
+					src={src}
+					alt={alt}
+					width={600} // Reduced from 800 for better performance in grid/carousel
+					height={450}
+					className="w-full h-full object-cover grayscale group-hover/img:grayscale-0 group-hover/img:scale-105 transition-all duration-700"
+					style={{
+						WebkitFilter: isLoading ? "blur(8px)" : "none",
+					}}
+					onLoad={() => setIsLoading(false)}
+				/>
+			</div>
 		</button>
 	)
-}
+})
 
 export function Highlights() {
 	return (
