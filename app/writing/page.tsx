@@ -1,3 +1,4 @@
+import React from "react"
 import { allWritings } from "content-collections"
 import Link from "next/link"
 

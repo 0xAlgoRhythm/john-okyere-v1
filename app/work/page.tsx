@@ -1,3 +1,4 @@
+import React from "react"
 import {
 	ArrowRight02Icon,
 	Github01Icon,
