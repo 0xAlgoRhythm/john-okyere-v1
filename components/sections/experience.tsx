@@ -5,7 +5,7 @@ import { HugeiconsIcon } from "@hugeicons/react"
 import { AnimatePresence, motion } from "framer-motion"
 import Image from "next/image"
 import Link from "next/link"
-import { useState } from "react"
+import React, { useState } from "react"
 import { allExperiences } from "content-collections"
 import { cn } from "@/lib/utils"
 import { SectionGrid, SectionTitle, SectionContent } from "@/components/ui/section-grid"
@@ -71,7 +71,7 @@ function ExperienceCard({
 	isLast,
 }: ExperienceCardProps) {
 	const hasBullets = Boolean(bullets && bullets.length > 0)
-	const [isOpen, setIsOpen] = useState<boolean>(isFirst && hasBullets)
+	const [isOpen, setIsOpen] = useState<boolean>(!!isFirst && !!hasBullets)
 
 	return (
 		<div className="flex gap-4 group/card py-1">
@@ -84,7 +84,7 @@ function ExperienceCard({
 				type="button"
 				disabled={!hasBullets}
 				className={cn("flex-1 pb-4 text-left w-full", hasBullets && "cursor-pointer")}
-				onClick={() => setIsOpen((prev: boolean) => !prev)}
+				onClick={() => setIsOpen((prev) => !prev)}
 			>
 				<div className="flex flex-col gap-1">
 					<div className="flex items-center gap-2 font-mono text-[9px] text-cyan-500 uppercase tracking-[0.2em]">

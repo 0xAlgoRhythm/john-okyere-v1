@@ -1,4 +1,5 @@
-import * as React from "react"
+"use client"
+import React from "react"
 import { ArrowUpRight03Icon, Calendar03Icon, Mail01Icon, GithubIcon, Linkedin01Icon } from "@hugeicons/core-free-icons"
 import { HugeiconsIcon } from "@hugeicons/react"
 import Image from "next/image"
