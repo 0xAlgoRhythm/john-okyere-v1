@@ -72,9 +72,10 @@ const ExperienceCard = React.memo(function ExperienceCard({
 }: ExperienceCardProps) {
 	const hasBullets = Boolean(bullets && bullets.length > 0)
 	const [isOpen, setIsOpen] = useState<boolean>(!!isFirst && !!hasBullets)
+	const [isPending, startTransition] = React.useTransition()
 
 	return (
-		<div className="flex gap-4 group/card py-1">
+		<div className={cn("flex gap-4 group/card py-1", isPending && "opacity-80")}>
 			<div className="flex flex-col items-center">
 				<CompanyIcon company={company} href={companyHref} />
 				{!isLast && <div className="w-px bg-border/40 flex-1 min-h-[1.5rem] mt-2" />}
@@ -85,13 +86,16 @@ const ExperienceCard = React.memo(function ExperienceCard({
 					type="button"
 					disabled={!hasBullets}
 					className={cn(
-						"flex flex-col gap-1 text-left w-full transition-opacity pb-2", 
+						"flex flex-col gap-1 text-left w-full transition-opacity pb-2 outline-none", 
 						hasBullets ? "cursor-pointer hover:opacity-80" : "cursor-default"
 					)}
 					onClick={(e) => {
 						if (!hasBullets) return
 						e.preventDefault()
-						setIsOpen((prev) => !prev)
+						// Use startTransition to keep the UI responsive during height: "auto" calculations
+						startTransition(() => {
+							setIsOpen((prev) => !prev)
+						})
 					}}
 				>
 					<div className="flex items-center gap-2 font-mono text-[9px] text-cyan-500 uppercase tracking-[0.2em]">
@@ -114,13 +118,13 @@ const ExperienceCard = React.memo(function ExperienceCard({
 							initial={{ height: 0, opacity: 0 }}
 							animate={{ height: "auto", opacity: 1 }}
 							exit={{ height: 0, opacity: 0 }}
-							transition={{ duration: 0.2, ease: "easeOut" }}
+							transition={{ duration: 0.15, ease: [0.33, 1, 0.68, 1] }}
 							className="overflow-hidden"
 						>
 							<ul className="mt-1 mb-4 space-y-1.5 bezel bg-accent/5 p-3">
 								{bullets?.map((bullet: string, i: number) => (
 									<li
-										key={`${bullet.slice(0, 20)}-${i}`}
+										key={`${bullet.slice(0, 30)}-${i}`}
 										className="text-caption text-muted-foreground leading-relaxed flex gap-3"
 									>
 										<span className="text-cyan-500 font-mono text-[10px] mt-0.5 opacity-50">
@@ -139,12 +143,14 @@ const ExperienceCard = React.memo(function ExperienceCard({
 })
 
 export function Experience() {
-	const experiences = [...allExperiences].sort((a, b) => {
-		const ay = Number(a.year.split(" - ")[0])
-		const by = Number(b.year.split(" - ")[0])
-		if (Number.isFinite(ay) && Number.isFinite(by)) return by - ay
-		return b.year.localeCompare(a.year)
-	})
+	const experiences = React.useMemo(() => {
+		return [...allExperiences].sort((a, b) => {
+			const ay = Number(a.year.split(" - ")[0])
+			const by = Number(b.year.split(" - ")[0])
+			if (Number.isFinite(ay) && Number.isFinite(by)) return by - ay
+			return b.year.localeCompare(a.year)
+		})
+	}, [])
 
 	return (
 		<SectionGrid>
