@@ -1,5 +1,6 @@
 import React from "react"
 import { allWritings } from "content-collections"
+import Link from "next/link"
 import { SubPageNav } from "@/components/ui/sub-page-nav"
 
 function formatDate(date: Date): string {
