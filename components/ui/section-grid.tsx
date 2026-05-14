@@ -14,14 +14,14 @@ export function SectionGrid({ className, children }: SectionGridProps) {
     <FadeUp>
       <div className="flex flex-col pb-2 md:pb-4">
         <LinesBG className="-mx-4 sm:-mx-5 mb-1 md:mb-2" />
-        <dl
+        <div
           className={cn(
             "grid grid-cols-12 gap-x-8 gap-y-3 sm:gap-y-4",
             className,
           )}
         >
           {children}
-        </dl>
+        </div>
       </div>
     </FadeUp>
   );
@@ -35,14 +35,14 @@ interface SectionTitleProps {
 
 export function SectionTitle({ className, children, action }: SectionTitleProps) {
   return (
-    <dt className={cn("col-span-12 pt-0", className)}>
+    <div className={cn("col-span-12 pt-0", className)}>
       <div className="flex items-center justify-between gap-4 mb-1.5">
         <div className="flex items-center gap-2 flex-1">
-          <span className="text-cyan-500/40 font-mono text-xs">[</span>
-          <h3 className="text-section-title font-title font-semibold text-muted-foreground">
+          <span className="text-cyan-500/70 font-mono text-xs">[</span>
+          <h2 className="text-section-title font-title font-semibold text-muted-foreground">
             {children}
-          </h3>
-          <span className="text-cyan-500/40 font-mono text-xs">]</span>
+          </h2>
+          <span className="text-cyan-500/70 font-mono text-xs">]</span>
           <div className="h-px bg-border/40 flex-1 ml-4" />
         </div>
         {action && (
@@ -51,7 +51,7 @@ export function SectionTitle({ className, children, action }: SectionTitleProps)
           </div>
         )}
       </div>
-    </dt>
+    </div>
   );
 }
 
@@ -62,8 +62,8 @@ interface SectionContentProps {
 
 export function SectionContent({ className, children }: SectionContentProps) {
   return (
-    <dd className={cn("col-span-12 pt-0", className)}>
+    <div className={cn("col-span-12 pt-0", className)}>
       {children}
-    </dd>
+    </div>
   );
 }

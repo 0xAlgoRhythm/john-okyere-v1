@@ -176,7 +176,7 @@ const HighlightImage = React.memo(function HighlightImage({
 			onClick={handleClick}
 			aria-label={`View ${alt}`}
 		>
-			<div className="absolute top-2 right-2 z-10 font-mono text-[8px] text-muted-foreground bg-background/80 px-1 py-0.5 bezel">
+			<div className="absolute top-2 right-2 z-10 font-mono text-[8px] text-foreground/80 bg-background px-1 py-0.5 bezel shadow-sm">
 				IMG_{index.toString().padStart(3, "0")}
 			</div>
 			<div className="relative w-full h-auto aspect-[4/3] overflow-hidden">

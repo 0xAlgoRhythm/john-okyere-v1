@@ -13,16 +13,16 @@ export function Footer() {
 						<span className="opacity-30">|</span>
 						<span>ALL_RIGHTS_RESERVED</span>
 					</div>
-					<div className="flex items-center gap-2 text-[9px] opacity-60">
+					<div className="flex items-center gap-2 text-[9px] opacity-80">
 						<span>ENCRYPTION: AES-256</span>
-						<span className="opacity-30">•</span>
+						<span className="opacity-40">•</span>
 						<span>PROTOCOL: SECURE_SHELL</span>
 					</div>
 				</div>
 
 				<div className="flex flex-col md:items-end gap-2">
 					<div className="flex items-center gap-2">
-						<span className="opacity-40">BUILT_BY:</span>
+						<span className="opacity-70">BUILT_BY:</span>
 						<a
 							href={siteConfig.links.twitter}
 							target="_blank"
@@ -32,7 +32,7 @@ export function Footer() {
 							JOHN_OKYERE
 						</a>
 					</div>
-					<div className="text-[9px] opacity-60">
+					<div className="text-[9px] opacity-80">
 						LAST_UPDATE: {new Date().toISOString().split("T")[0].replace(/-/g, ".")}
 					</div>
 				</div>

@@ -48,8 +48,8 @@ export function SelectedWork() {
 								<div className="flex items-start justify-between">
 									<div className="flex flex-col gap-1">
 										<div className="flex items-center gap-2 font-mono text-[9px] text-cyan-500">
-											<span className="opacity-50">[MODULE]</span>
-											<span className="font-bold tracking-widest">
+											<span className="opacity-70">[MODULE]</span>
+											<span className="font-bold tracking-widest text-cyan-500/90">
 												{project.date || "2024.X"}
 											</span>
 										</div>

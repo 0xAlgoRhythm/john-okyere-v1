@@ -99,7 +99,7 @@ const ExperienceCard = React.memo(function ExperienceCard({
 					}}
 				>
 					<div className="flex items-center gap-2 font-mono text-[9px] text-cyan-500 uppercase tracking-[0.2em]">
-						<span className="opacity-50">[ENTRY_POINT]</span>
+						<span className="opacity-70">[ENTRY_POINT]</span>
 						<span>{year}</span>
 					</div>
 					<div className="flex items-baseline justify-between gap-4">
