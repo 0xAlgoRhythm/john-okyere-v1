@@ -70,8 +70,8 @@ function ExperienceCard({
 	isFirst,
 	isLast,
 }: ExperienceCardProps) {
-	const hasBullets = bullets && bullets.length > 0
-	const [isOpen, setIsOpen] = useState(isFirst && hasBullets)
+	const hasBullets = Boolean(bullets && bullets.length > 0)
+	const [isOpen, setIsOpen] = useState<boolean>(isFirst && hasBullets)
 
 	return (
 		<div className="flex gap-4 group/card py-1">
