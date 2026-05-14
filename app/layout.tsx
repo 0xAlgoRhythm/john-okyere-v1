@@ -10,6 +10,7 @@ import { Footer } from "@/components/ui/footer"
 import { MouseGlow } from "@/components/ui/mouse-glow"
 import { ProgressiveBlur } from "@/components/ui/progressive-blur"
 import ClientDither from "@/components/dither/client-dither"
+import { Analytics } from "@vercel/analytics/next"
 
 const inter = Inter({
 	variable: "--font-inter",
@@ -115,6 +116,7 @@ export default function RootLayout({
 						<Footer />
 					</div>
 					<ImageViewer />
+					<Analytics />
 				</ThemeProvider>
 			</body>
 		</html>
