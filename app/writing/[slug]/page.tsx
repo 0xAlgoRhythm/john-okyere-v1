@@ -6,6 +6,8 @@ import { notFound } from "next/navigation"
 import { readingTime } from "reading-time-estimator"
 import { MDX } from "@/components/mdx"
 
+import { SubPageNav } from "@/components/ui/sub-page-nav"
+
 interface WritingPageProps {
 	params: Promise<{ slug: string }>
 }
@@ -41,12 +43,12 @@ export default async function WritingDetailPage({ params }: WritingPageProps) {
 		<div className="px-6 md:px-10 py-6 md:py-8">
 			<section className="pb-10 mb-10">
 				<div className="flex items-center justify-between mb-8">
-					<div className="flex items-center gap-2 font-mono text-[10px] tracking-[0.2em] text-muted-foreground uppercase">
-						<span className="opacity-50">~</span>
-						<Link href="/writing" className="hover:text-foreground transition-colors">WRITING</Link>
-						<span className="opacity-50">/</span>
-						<span>{post.title.toUpperCase().replace(/\s+/g, "_")}</span>
-					</div>
+					<SubPageNav 
+						path={[
+							{ label: "WRITING", href: "/writing" },
+							{ label: post.title.toUpperCase().replace(/\s+/g, "_") }
+						]} 
+					/>
 				</div>
 
 				<header className="space-y-6 mb-12">

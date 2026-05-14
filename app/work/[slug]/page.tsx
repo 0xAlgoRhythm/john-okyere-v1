@@ -7,6 +7,8 @@ import Link from "next/link"
 import { notFound } from "next/navigation"
 import { MDX } from "@/components/mdx"
 
+import { SubPageNav } from "@/components/ui/sub-page-nav"
+
 interface WorkPageProps {
 	params: Promise<{ slug: string }>
 }
@@ -32,12 +34,12 @@ export default async function WorkDetailPage({ params }: WorkPageProps) {
 		<div className="px-6 md:px-10 py-6 md:py-8">
 			<section className="pb-10 mb-10">
 				<div className="flex items-center justify-between mb-8">
-					<div className="flex items-center gap-2 font-mono text-[10px] tracking-[0.2em] text-muted-foreground uppercase">
-						<span className="opacity-50">~</span>
-						<Link href="/work" className="hover:text-foreground transition-colors">PROJECTS</Link>
-						<span className="opacity-50">/</span>
-						<span>{project.title.toUpperCase().replace(/\s+/g, "_")}</span>
-					</div>
+					<SubPageNav 
+						path={[
+							{ label: "PROJECTS", href: "/work" },
+							{ label: project.title.toUpperCase().replace(/\s+/g, "_") }
+						]} 
+					/>
 				</div>
 
 				{project.image && (

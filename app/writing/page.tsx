@@ -1,6 +1,4 @@
-import React from "react"
-import { allWritings } from "content-collections"
-import Link from "next/link"
+import { SubPageNav } from "@/components/ui/sub-page-nav"
 
 function formatDate(date: Date): string {
 	return Intl.DateTimeFormat("en-US", {
@@ -19,12 +17,7 @@ export default function WritingPage() {
 		<div className="px-6 md:px-10 py-6 md:py-8">
 			<section className="pb-10 border-b border-border/40 mb-10">
 				<div className="flex items-center justify-between mb-8">
-					<div className="flex items-center gap-2 font-mono text-[10px] tracking-[0.2em] text-muted-foreground uppercase">
-						<span className="opacity-50">~</span>
-						<Link href="/" className="hover:text-foreground transition-colors">ROOT</Link>
-						<span className="opacity-50">/</span>
-						<span>WRITING</span>
-					</div>
+					<SubPageNav path={[{ label: "WRITING" }]} />
 				</div>
 				
 				<div className="space-y-3">

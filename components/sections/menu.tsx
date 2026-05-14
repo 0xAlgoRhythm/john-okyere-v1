@@ -22,6 +22,7 @@ import {
   Loading03Icon,
   Github01Icon,
   Linkedin01Icon,
+  TelegramIcon,
 } from "@hugeicons/core-free-icons";
 import { ThemeToggleIcon } from "@/components/icons";
 import { siteConfig } from "@/config/site";
@@ -195,9 +196,16 @@ export function Menu() {
                 <span>linkedin.com</span>
               </div>
             </Command.Item>
-            <Command.Item onSelect={() => navigate(siteConfig.links.email)}>
+            <Command.Item onSelect={() => navigate(siteConfig.links.telegram)}>
               <div className="flex items-center gap-3 text-foreground font-mono text-sm">
                 <span className="text-muted-foreground opacity-50">09</span>
+                <HugeiconsIcon icon={TelegramIcon} size={14} strokeWidth={2} />
+                <span>telegram.connect()</span>
+              </div>
+            </Command.Item>
+            <Command.Item onSelect={() => navigate(siteConfig.links.email)}>
+              <div className="flex items-center gap-3 text-foreground font-mono text-sm">
+                <span className="text-muted-foreground opacity-50">10</span>
                 <HugeiconsIcon icon={Mail01Icon} size={14} strokeWidth={2} />
                 <span>smtp.connect()</span>
               </div>

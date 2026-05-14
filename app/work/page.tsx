@@ -9,7 +9,7 @@ import { allWorks } from "content-collections"
 import Image from "next/image"
 import Link from "next/link"
 import { Badge } from "@/components/ui/badge"
-import { getTechIcon } from "@/components/icons"
+import { SubPageNav } from "@/components/ui/sub-page-nav"
 
 export default function WorkPage() {
 	const sortedProjects = [...allWorks].sort((a, b) => a.sort - b.sort)
@@ -18,12 +18,7 @@ export default function WorkPage() {
 		<div className="px-6 md:px-10 py-6 md:py-8">
 			<section className="pb-10 border-b border-border/40 mb-10">
 				<div className="flex items-center justify-between mb-8">
-					<div className="flex items-center gap-2 font-mono text-[10px] tracking-[0.2em] text-muted-foreground uppercase">
-						<span className="opacity-50">~</span>
-						<Link href="/" className="hover:text-foreground transition-colors">ROOT</Link>
-						<span className="opacity-50">/</span>
-						<span>PROJECTS</span>
-					</div>
+					<SubPageNav path={[{ label: "PROJECTS" }]} />
 				</div>
 				
 				<div className="space-y-3">
