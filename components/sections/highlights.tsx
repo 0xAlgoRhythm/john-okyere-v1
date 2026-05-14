@@ -196,7 +196,10 @@ const HighlightImage = React.memo(function HighlightImage({
 	)
 })
 
-export function Highlights() {
+export const Highlights = React.memo(function Highlights() {
+	// Limit to top 32 items to maintain performance and avoid INP bottlenecks
+	const displayHighlights = HIGHLIGHTS.slice(0, 32)
+
 	return (
 		<SectionGrid>
 			<SectionTitle>Visual_Telemetry_Feed</SectionTitle>
@@ -207,7 +210,7 @@ export function Highlights() {
 						plugins={[Autoplay({ delay: 4000 })]}
 					>
 						<CarouselContent className="-ml-4">
-							{HIGHLIGHTS.map((item, index) => (
+							{displayHighlights.map((item, index) => (
 								<CarouselItem
 									key={`${item.image}-${index}`}
 									className="pl-4 basis-[85%] sm:basis-[60%]"
@@ -218,7 +221,7 @@ export function Highlights() {
 											<span className="font-mono text-[9px] text-cyan-500 mt-1">
 												[LOG]
 											</span>
-											<p className="text-[11px] font-mono leading-relaxed text-muted-foreground">
+											<p className="text-[11px] font-mono leading-relaxed text-muted-foreground line-clamp-2">
 												{item.title.toUpperCase()}
 											</p>
 										</div>
@@ -231,4 +234,4 @@ export function Highlights() {
 			</SectionContent>
 		</SectionGrid>
 	)
-}
+})
