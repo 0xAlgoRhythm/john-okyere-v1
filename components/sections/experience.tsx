@@ -157,7 +157,7 @@ export function Experience() {
 			<SectionTitle>Experience_Chronology</SectionTitle>
 			<SectionContent>
 				<div className="flex flex-col">
-					{experiences.map((experience, index) => (
+					{experiences.map((experience: any, index: number) => (
 						<ExperienceCard
 							key={`${experience.year}-${experience.company}`}
 							role={experience.role}

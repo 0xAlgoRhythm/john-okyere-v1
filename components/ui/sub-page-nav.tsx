@@ -15,7 +15,7 @@ export function SubPageNav({ path }: SubPageNavProps) {
 		<div className="flex items-center gap-2 font-mono text-[10px] tracking-[0.2em] text-muted-foreground uppercase">
 			<span className="opacity-50">~</span>
 			<Link href="/" className="hover:text-foreground transition-colors">ROOT</Link>
-			{path.map((item, index) => (
+			{path.map((item: any, index: number) => (
 				<React.Fragment key={item.label}>
 					<span className="opacity-50">/</span>
 					{item.href ? (

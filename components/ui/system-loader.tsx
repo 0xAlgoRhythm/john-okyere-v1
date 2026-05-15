@@ -148,7 +148,7 @@ export function SystemLoader() {
 
 							<div className="grid grid-cols-1 md:grid-cols-2 gap-10">
 								<div className="flex flex-col gap-1 min-h-[350px] overflow-y-auto">
-									{logs.map((log, i) => (
+									{logs.map((log: string, i: number) => (
 										<motion.div
 											key={i}
 											initial={{ opacity: 0, x: -10 }}
@@ -177,7 +177,7 @@ export function SystemLoader() {
 										<span className="animate-pulse">Loading_Logic...</span>
 									</div>
 									<div className="space-y-6">
-										{[0, 1, 2].map((i) => (
+										{[0, 1, 2].map((i: number) => (
 											<div key={i} className="space-y-2">
 												<div className="flex justify-between text-[9px] text-muted-foreground uppercase font-bold">
 													<span>Process_Handle_0x{i + 42}</span>

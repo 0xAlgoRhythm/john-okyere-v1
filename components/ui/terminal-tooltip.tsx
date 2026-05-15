@@ -30,7 +30,7 @@ const TerminalTooltipContent = React.forwardRef<
 				<span className="text-cyan-500 font-bold uppercase tracking-widest text-[8px]">Metadata_Dump</span>
 			</div>
 			{metadata ? (
-				Object.entries(metadata).map(([key, value]) => (
+				Object.entries(metadata).map(([key, value]: [string, string]) => (
 					<div key={key} className="flex justify-between gap-4">
 						<span className="text-muted-foreground uppercase">{key}:</span>
 						<span className="text-foreground font-bold">{value}</span>

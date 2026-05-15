@@ -30,7 +30,7 @@ export function SelectedWork() {
 			</SectionTitle>
 			<SectionContent>
 				<div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-					{featuredProjects.map((project, index) => (
+					{featuredProjects.map((project: any, index: number) => (
 						<motion.div
 							key={project._meta.path}
 							initial={{ opacity: 0, y: 20 }}
@@ -76,7 +76,7 @@ export function SelectedWork() {
 										/>
 										<div className="absolute inset-0 bg-gradient-to-t from-background/80 to-transparent opacity-60" />
 										<div className="absolute bottom-3 left-3 flex gap-2">
-											{project.stack?.slice(0, 3).map((tag, i) => (
+											{project.stack?.slice(0, 3).map((tag: string, i: number) => (
 												<span
 													key={`${tag}-${i}`}
 													className="px-1.5 py-0.5 bezel bg-background/80 backdrop-blur-sm text-[8px] font-mono text-foreground tracking-tighter"

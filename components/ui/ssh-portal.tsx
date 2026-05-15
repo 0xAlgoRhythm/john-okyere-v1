@@ -70,7 +70,7 @@ export function SSHPortal({ isOpen, onClose }: { isOpen: boolean, onClose: () =>
 
 				<div className="p-6 font-mono text-[11px] space-y-6">
 					<div className="space-y-1 text-muted-foreground">
-						{logs.map((log, i) => (
+						{logs.map((log: string, i: number) => (
 							<div key={i} className="flex gap-3">
 								<span className="text-cyan-500/50">[{i.toString().padStart(2, "0")}]</span>
 								<span>{log}</span>

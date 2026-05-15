@@ -68,7 +68,7 @@ export function Header({ name, title, isActive }: HeaderProps) {
 			</motion.div>
 
 			<div className="flex items-center gap-3 mt-4">
-				{SOCIAL_LINKS.map((link, index) => (
+				{SOCIAL_LINKS.map((link: any, index: number) => (
 					<motion.a
 						key={link.label}
 						href={link.href}

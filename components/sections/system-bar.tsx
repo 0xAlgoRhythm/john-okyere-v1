@@ -52,7 +52,7 @@ export function SystemBar() {
 				<div className="flex items-center gap-2 sm:gap-3">
 					<span className="opacity-40 text-[7px] sm:text-[8px]">CPU:</span>
 					<div className="flex items-end gap-0.5 h-2.5 sm:h-3">
-						{[1, 2, 3, 4].map((i) => (
+						{[1, 2, 3, 4].map((i: number) => (
 							<motion.div
 								key={i}
 								animate={{ height: ["20%", "80%", "40%", "100%", "30%"] }}
@@ -66,7 +66,7 @@ export function SystemBar() {
 				<div className="hidden sm:flex items-center gap-4 px-4 border-x border-border/40">
 					<span className="opacity-40 text-[8px]">TX_LIVE:</span>
 					<div className="flex items-end gap-0.5 h-3">
-						{[1, 2, 3].map((i) => (
+						{[1, 2, 3].map((i: number) => (
 							<motion.div
 								key={i}
 								animate={{ height: ["40%", "90%", "20%", "70%", "50%"] }}

@@ -61,7 +61,7 @@ export function ImageCarousel({ imageUrls }: ImageCarouselProps) {
       ]}
     >
       <CarouselContent>
-        {imageUrls.map((url) => (
+        {imageUrls.map((url: string) => (
           <CarouselItem key={url}>
             <button
               type="button"

@@ -210,7 +210,7 @@ export const Highlights = React.memo(function Highlights() {
 						plugins={[Autoplay({ delay: 4000 })]}
 					>
 						<CarouselContent className="-ml-4">
-							{displayHighlights.map((item, index) => (
+							{displayHighlights.map((item: any, index: number) => (
 								<CarouselItem
 									key={`${item.image}-${index}`}
 									className="pl-4 basis-[85%] sm:basis-[60%]"

@@ -40,7 +40,7 @@ export function Writing() {
 			</SectionTitle>
 			<SectionContent>
 				<div className="flex flex-col bezel bg-emerald-500/[0.02] divide-y divide-border/40">
-					{recentPosts.map((post) => (
+					{recentPosts.map((post: any) => (
 						<Link
 							key={post._meta.path}
 							href={`/writing/${post._meta.path}`}
