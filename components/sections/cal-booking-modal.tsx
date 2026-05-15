@@ -3,13 +3,9 @@
 /**
  * CalBookingModal
  *
- * A zero-auth Cal.com booking modal that uses the official Cal.com
- * public iframe embed URL. No Platform API keys required.
- *
- * @calcom/atoms BookerEmbed requires a paid Platform OAuth clientId
- * (for building scheduling SaaS products) and cannot be used here.
- * This implementation uses Cal.com's supported public iframe embed
- * which is exactly what their "element-click" embed wizard generates.
+ * A zero-auth Cal.com booking modal using the official public iframe embed.
+ * No Platform API keys required — @calcom/atoms BookerEmbed is a paid
+ * Platform API product and cannot be used for a personal portfolio.
  */
 
 import React, { useState, useCallback } from "react"
@@ -25,7 +21,6 @@ const CAL_EVENT_SLUG = "15m"
 const CAL_EMBED_URL = `https://cal.com/${CAL_USERNAME}/${CAL_EVENT_SLUG}?embed=true&embedType=inline&theme=dark&layout=month_view`
 
 interface CalBookingModalProps {
-	/** The trigger element that opens the modal */
 	trigger: React.ReactNode
 }
 
@@ -35,7 +30,6 @@ export function CalBookingModal({ trigger }: CalBookingModalProps) {
 
 	const handleOpenChange = useCallback((nextOpen: boolean) => {
 		setOpen(nextOpen)
-		// Reset iframe loaded state when closing so skeleton shows on next open
 		if (!nextOpen) setIframeLoaded(false)
 	}, [])
 
@@ -47,20 +41,37 @@ export function CalBookingModal({ trigger }: CalBookingModalProps) {
 				{/* Backdrop */}
 				<Dialog.Overlay className="fixed inset-0 z-50 bg-black/70 backdrop-blur-sm data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0" />
 
-				{/* Modal panel */}
+				{/*
+				  Modal panel
+				  — w-[min(96vw,760px)]: wider on desktop to give Cal.com more room
+				  — h-[90dvh]: fills 90% of the actual visible viewport (dvh handles
+				    mobile browser chrome correctly, unlike vh)
+				  — flex flex-col: lets children fill remaining height
+				*/}
 				<Dialog.Content
 					aria-describedby={undefined}
-					className="fixed left-1/2 top-1/2 z-50 -translate-x-1/2 -translate-y-1/2 w-[min(94vw,680px)] max-h-[90vh] flex flex-col data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[state=closed]:slide-out-to-left-1/2 data-[state=closed]:slide-out-to-top-[48%] data-[state=open]:slide-in-from-left-1/2 data-[state=open]:slide-in-from-top-[48%] duration-200"
+					className="fixed left-1/2 top-1/2 z-50 -translate-x-1/2 -translate-y-1/2
+					           w-[min(96vw,760px)] h-[90dvh]
+					           flex flex-col
+					           data-[state=open]:animate-in data-[state=closed]:animate-out
+					           data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0
+					           data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95
+					           data-[state=closed]:slide-out-to-left-1/2 data-[state=closed]:slide-out-to-top-[48%]
+					           data-[state=open]:slide-in-from-left-1/2 data-[state=open]:slide-in-from-top-[48%]
+					           duration-200"
 				>
-					{/* Bezel container matching the site's design language */}
-					<div className="flex flex-col border border-border/60 bg-background/95 backdrop-blur-md shadow-[0_0_60px_-10px_rgba(0,0,0,0.8)] overflow-hidden relative">
-						{/* Inner glow from top */}
+					{/*
+					  Bezel shell — must also be flex + h-full so it fills the
+					  Dialog.Content box and doesn't collapse to fit-content.
+					*/}
+					<div className="flex flex-col h-full border border-border/60 bg-background/95 backdrop-blur-md shadow-[0_0_60px_-10px_rgba(0,0,0,0.8)] overflow-hidden relative">
+						{/* Subtle inner glow */}
 						<div className="absolute inset-0 bg-gradient-to-br from-white/[0.03] to-transparent pointer-events-none z-0" />
 
-						{/* Header bar */}
-						<div className="relative z-10 flex items-center justify-between px-4 py-3 border-b border-border/60 bg-accent/5 flex-shrink-0">
+						{/* ── Header bar ── */}
+						<div className="relative z-10 flex items-center justify-between px-4 py-2.5 border-b border-border/60 bg-accent/5 flex-shrink-0">
 							<div className="flex items-center gap-3">
-								{/* Status dots — CRT monitor aesthetic */}
+								{/* Traffic-light dots */}
 								<div className="flex gap-1.5">
 									<span className="size-2 rounded-full bg-red-500/60" />
 									<span className="size-2 rounded-full bg-yellow-500/60" />
@@ -86,16 +97,21 @@ export function CalBookingModal({ trigger }: CalBookingModalProps) {
 							</Dialog.Close>
 						</div>
 
-						{/* Accessible title (visually hidden) */}
+						{/* Accessible title */}
 						<VisuallyHidden.Root>
 							<Dialog.Title>Book a 15-minute call with John Okyere</Dialog.Title>
 						</VisuallyHidden.Root>
 
-						{/* Iframe area */}
-						<div className="relative z-10 flex-1 min-h-0" style={{ height: "580px" }}>
-							{/* Skeleton loader shown while iframe hydrates */}
+						{/*
+						  ── Iframe wrapper ──
+						  flex-1 + min-h-0 = fills all remaining height between header & footer.
+						  min-h-0 is essential: without it, a flex child won't shrink
+						  below its content size and will overflow.
+						*/}
+						<div className="relative z-10 flex-1 min-h-0">
+							{/* Skeleton shown while iframe hydrates */}
 							{!iframeLoaded && (
-								<div className="absolute inset-0 flex flex-col items-center justify-center gap-4 bg-background/50">
+								<div className="absolute inset-0 flex flex-col items-center justify-center bg-background/50">
 									<div className="flex flex-col items-center gap-3">
 										<div className="size-10 bezel flex items-center justify-center bg-accent/5">
 											<HugeiconsIcon
@@ -123,10 +139,13 @@ export function CalBookingModal({ trigger }: CalBookingModalProps) {
 								</div>
 							)}
 
+							{/* The iframe itself fills the entire wrapper box */}
 							<iframe
 								src={CAL_EMBED_URL}
 								title="Book a call with John Okyere"
-								className="w-full h-full border-0 transition-opacity duration-300"
+								width="100%"
+								height="100%"
+								className="border-0 transition-opacity duration-300 block"
 								style={{ opacity: iframeLoaded ? 1 : 0 }}
 								onLoad={() => setIframeLoaded(true)}
 								allow="camera; microphone; payment"
@@ -134,7 +153,7 @@ export function CalBookingModal({ trigger }: CalBookingModalProps) {
 							/>
 						</div>
 
-						{/* Footer strip */}
+						{/* ── Footer strip ── */}
 						<div className="relative z-10 flex items-center justify-between px-4 py-2 border-t border-border/60 bg-accent/5 flex-shrink-0">
 							<span className="font-mono text-[9px] text-muted-foreground/60 tracking-widest uppercase">
 								Powered by Cal.com
