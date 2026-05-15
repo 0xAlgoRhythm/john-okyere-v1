@@ -13,11 +13,11 @@ const writing = defineCollection({
     tags: z.array(z.string()).optional(),
     image: z.string().optional(),
   }),
-  transform: async (document, { collection, cache }) => {
+  transform: async (document: any, { collection, cache }: any) => {
     const mdx = await compileMDX({ cache }, document);
     const docs = await collection.documents();
     const idx = docs.findIndex(
-      (d) => document._meta.filePath === d._meta.filePath,
+      (d: any) => document._meta.filePath === d._meta.filePath,
     );
 
     return {

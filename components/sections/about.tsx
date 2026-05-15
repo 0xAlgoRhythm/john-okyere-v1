@@ -40,15 +40,19 @@ export function About() {
 
 	const handleBookCall = (e: React.MouseEvent) => {
 		e.preventDefault();
-		if (window.Cal) {
-			window.Cal("modal", {
-				calLink: "johnokyere/15m",
-				config: { layout: "month_view", useSlotsViewOnSmallScreen: true }
-			});
-		} else {
-			// Emergency Fallback
-			window.open("https://cal.com/johnokyere/15m", "_blank");
-		}
+		
+		// Defer heavy modal logic to yield the main thread for immediate paint
+		setTimeout(() => {
+			if (window.Cal) {
+				window.Cal("modal", {
+					calLink: "johnokyere/15m",
+					config: { layout: "month_view", useSlotsViewOnSmallScreen: true }
+				});
+			} else {
+				// Emergency Fallback
+				window.open("https://cal.com/johnokyere/15m", "_blank");
+			}
+		}, 0);
 	}
 
 	return (
