@@ -46,6 +46,7 @@ export function SystemLoader() {
 	const [logs, setLogs] = useState<string[]>([])
 	const [matrixText, setMatrixText] = useState("")
 	const [processPercentages, setProcessPercentages] = useState<number[]>([0, 0, 0])
+	const [visitorInfo, setVisitorInfo] = useState<any>(null)
 
 	useEffect(() => {
 		setIsMounted(true)
@@ -55,6 +56,12 @@ export function SystemLoader() {
 			Math.floor(Math.random() * 100),
 			Math.floor(Math.random() * 100)
 		])
+
+		// Fetch visitor intelligence
+		fetch("https://ipapi.co/json/")
+			.then(res => res.json())
+			.then(data => setVisitorInfo(data))
+			.catch(() => setVisitorInfo({ ip: "127.0.0.1", org: "UNKNOWN_ISP", country_name: "LOCAL_HOST" }))
 	}, [])
 
 	useEffect(() => {
@@ -63,9 +70,18 @@ export function SystemLoader() {
 		// Main Log Stream
 		if (currentLog < BOOT_LOGS.length) {
 			const timeout = setTimeout(() => {
-				setLogs((prev) => [...prev, BOOT_LOGS[currentLog]])
+				let log = BOOT_LOGS[currentLog]
+				
+				// Dynamic injection of visitor info
+				if (log.includes("SCANNING_USER_CREDENTIALS") && visitorInfo) {
+					log = `NETWORK_INTEL: [IP:${visitorInfo.ip}] [ISP:${visitorInfo.org?.toUpperCase()}]`
+				} else if (log.includes("TARGET_LOCKED") && visitorInfo) {
+					log = `LOCATION_LOCKED: [${visitorInfo.city?.toUpperCase()}, ${visitorInfo.country_name?.toUpperCase()}]`
+				}
+				
+				setLogs((prev) => [...prev, log])
 				setCurrentLog((prev) => prev + 1)
-			}, 800 + Math.random() * 500) // Calibrated for ~20s
+			}, 850 + Math.random() * 500)
 			return () => clearTimeout(timeout)
 		} else {
 			const finishTimeout = setTimeout(() => {
@@ -73,7 +89,7 @@ export function SystemLoader() {
 			}, 2000)
 			return () => clearTimeout(finishTimeout)
 		}
-	}, [currentLog, isVisible])
+	}, [currentLog, isVisible, visitorInfo])
 
 	useEffect(() => {
 		if (!isVisible) return
@@ -103,6 +119,16 @@ export function SystemLoader() {
 							{matrixText}
 						</pre>
 					</div>
+
+					{/* Bypass Button */}
+					<button 
+						onClick={() => setIsVisible(false)}
+						className="absolute top-8 right-8 z-[1002] flex items-center gap-2 px-3 py-1.5 bezel bg-red-500/10 border-red-500/30 text-red-500 text-[10px] font-bold uppercase tracking-widest hover:bg-red-500/20 transition-all group"
+					>
+						<span className="size-1.5 rounded-full bg-red-500 animate-pulse" />
+						Bypass_Firewall
+						<span className="opacity-40 group-hover:opacity-100 transition-opacity ml-2">[ESC]</span>
+					</button>
 
 					<div className="flex-1 flex flex-col justify-center p-8 md:p-24 relative z-10">
 						<div className="max-w-4xl w-full mx-auto space-y-8">
@@ -169,9 +195,9 @@ export function SystemLoader() {
 										))}
 									</div>
 									<div className="mt-auto pt-6 border-t border-border/20 text-[10px] text-muted-foreground italic leading-relaxed">
-										&gt; VERIFYING_BLOCKCHAIN_STATE... OK<br/>
-										&gt; CHECKING_AI_MODEL_INTEGRITY... OK<br/>
-										&gt; SECURING_LOCAL_STORAGE... OK
+										&gt; IP_ORIGIN: {visitorInfo?.ip || "DETECTING..."}<br/>
+										&gt; ISP_HANDSHAKE: {visitorInfo?.org || "ANALYZING..."}<br/>
+										&gt; VPN_STATUS: {visitorInfo?.vpn ? "ENCRYPTED" : "UNSECURED"}
 									</div>
 								</div>
 							</div>

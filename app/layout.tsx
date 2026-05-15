@@ -9,6 +9,7 @@ import { siteConfig } from "@/config/site"
 import { Footer } from "@/components/ui/footer"
 import { MouseGlow } from "@/components/ui/mouse-glow"
 import { SystemLoader } from "@/components/ui/system-loader"
+import { ShellProvider } from "@/components/providers/shell-provider"
 import ClientDither from "@/components/dither/client-dither"
 import { Analytics } from "@vercel/analytics/next"
 
@@ -106,6 +107,7 @@ export default function RootLayout({
 					<MouseGlow />
 					<ClientDither />
 					<Menu />
+					<ShellProvider />
 					<div className="max-w-[52rem] mx-auto min-h-screen border-x border-border/40 bg-background/50 relative shadow-[0_0_50px_-12px_rgba(0,0,0,0.3)] dark:shadow-[0_0_50px_-12px_rgba(0,0,0,0.5)]">
 						<SystemBar />
 						<main className="w-full flex-1 pt-4 pb-4 sm:pt-6 sm:pb-6">{children}</main>
