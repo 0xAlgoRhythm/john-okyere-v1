@@ -1,6 +1,5 @@
 "use client"
-import React from "react"
-import Script from "next/script"
+import React, { useEffect } from "react"
 import { Calendar03Icon, Mail01Icon } from "@hugeicons/core-free-icons"
 import { HugeiconsIcon } from "@hugeicons/react"
 import { siteConfig } from "@/config/site"
@@ -13,28 +12,56 @@ declare global {
 	}
 }
 
+// Cal.com standard stub — must run before embed.js processes the instruction queue.
+// This mirrors the snippet Cal provides: creates a queuing function so that
+// Cal("init", ...) calls are buffered and replayed once embed.js hydrates.
+function initCalStub() {
+	if (typeof window === "undefined" || window.Cal) return;
+	(function (C: Window & typeof globalThis, A: string, L: string) {
+		const p = (a: any, ar: IArguments | any[]) => { a.q.push(ar); };
+		const d = C.document;
+		C.Cal = function (...args: any[]) {
+			const cal = C.Cal as any;
+			if (!cal.loaded) {
+				cal.ns = {};
+				cal.q = cal.q || [];
+				const s = d.createElement("script");
+				s.src = A;
+				d.head.appendChild(s);
+				cal.loaded = true;
+			}
+			if (args[0] === L) {
+				const api: any = function (...a: any[]) { p(api, a); };
+				const namespace = args[1];
+				api.q = api.q || [];
+				if (typeof namespace === "string") {
+					cal.ns[namespace] = cal.ns[namespace] || api;
+					p(cal.ns[namespace], args);
+					p(cal, ["initNamespace", namespace]);
+				} else {
+					p(cal, args);
+				}
+				return;
+			}
+			p(cal, args);
+		} as any;
+	})(window, "https://cal.com/embed/embed.js", "init");
+
+	window.Cal!("init", "15m", { origin: "https://cal.com" });
+	window.Cal!.ns["15m"]("ui", {
+		styles: { branding: { brandColor: "#06b6d4" } },
+		hideEventTypeDetails: false,
+		layout: "month_view",
+	});
+}
+
 export function About() {
+	useEffect(() => {
+		initCalStub();
+	}, []);
+
 	return (
 		<>
-			{/* Cal.com embed — loaded AFTER DOM ready, init called in onLoad to avoid race conditions */}
-			<Script
-				src="https://cal.com/embed/embed.js"
-				strategy="lazyOnload"
-				onLoad={() => {
-					// Script is fully loaded — safe to call Cal now
-					if (window.Cal) {
-						window.Cal("init", "15m", { origin: "https://cal.com" });
-						if (window.Cal.ns?.["15m"]) {
-							window.Cal.ns["15m"]("ui", {
-								styles: { branding: { brandColor: "#06b6d4" } },
-								hideEventTypeDetails: false,
-								layout: "month_view",
-							});
-						}
-					}
-				}}
-			/>
-
 			<SectionGrid className="pt-0 pb-2">
 				<SectionContent className="space-y-6">
 					<div className="flex flex-col gap-6">
