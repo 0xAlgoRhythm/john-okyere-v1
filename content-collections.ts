@@ -20,11 +20,21 @@ const writing = defineCollection({
       (d: any) => document._meta.filePath === d._meta.filePath,
     );
 
+    const getMinimalDoc = (doc: any) => {
+      if (!doc) return null;
+      return {
+        title: doc.title,
+        _meta: {
+          path: doc._meta.path
+        }
+      };
+    };
+
     return {
       ...document,
       mdx,
-      prev: idx > 0 ? docs[idx - 1] : null,
-      next: idx < docs.length - 1 ? docs[idx + 1] : null,
+      prev: idx > 0 ? getMinimalDoc(docs[idx - 1]) : null,
+      next: idx < docs.length - 1 ? getMinimalDoc(docs[idx + 1]) : null,
     };
   },
 });
@@ -54,18 +64,28 @@ const work = defineCollection({
     team: z.array(z.string()).optional(),
     award: z.string().optional(),
   }),
-  transform: async (document, { collection, cache }) => {
+  transform: async (document: any, { collection, cache }: any) => {
     const mdx = await compileMDX({ cache }, document);
     const docs = await collection.documents();
     const idx = docs.findIndex(
-      (d) => document._meta.filePath === d._meta.filePath,
+      (d: any) => document._meta.filePath === d._meta.filePath,
     );
+
+    const getMinimalDoc = (doc: any) => {
+      if (!doc) return null;
+      return {
+        title: doc.title,
+        _meta: {
+          path: doc._meta.path
+        }
+      };
+    };
 
     return {
       ...document,
       mdx,
-      prev: idx > 0 ? docs[idx - 1] : null,
-      next: idx < docs.length - 1 ? docs[idx + 1] : null,
+      prev: idx > 0 ? getMinimalDoc(docs[idx - 1]) : null,
+      next: idx < docs.length - 1 ? getMinimalDoc(docs[idx + 1]) : null,
     };
   },
 });
