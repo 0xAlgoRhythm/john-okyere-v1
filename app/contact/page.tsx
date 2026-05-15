@@ -16,10 +16,12 @@ export default function ContactPage() {
 		
 		const formData = new FormData(e.currentTarget)
 		const name = formData.get("name") || "Anonymous_Node"
+		const commId = Math.random().toString(36).substring(7).toUpperCase()
 		
 		formData.append("access_key", process.env.NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY || "")
-		formData.append("subject", `[Okyere.Sys] NEW_INBOUND_COMMUNICATION: ${name}`)
+		formData.append("subject", `[Okyere.Sys] INBOUND_COMMUNICATION: ${name} (ID_${commId})`)
 		formData.append("from_name", "Okyere.Sys Mission Control")
+		formData.append("replyto", "hello@johnokyere.xyz")
 
 		try {
 			const response = await fetch("https://api.web3forms.com/submit", {

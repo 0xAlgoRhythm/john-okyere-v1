@@ -18,10 +18,12 @@ export function SSHPortal({ isOpen, onClose }: { isOpen: boolean, onClose: () =>
 		
 		const formData = new FormData(e.currentTarget)
 		const name = formData.get("name") || "Remote_Operator"
+		const commId = Math.random().toString(36).substring(7).toUpperCase()
 
 		formData.append("access_key", process.env.NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY || "")
-		formData.append("subject", `[Okyere.Sys] SSH_ENCRYPTED_MESSAGE: ${name}`)
+		formData.append("subject", `[Okyere.Sys] SSH_ENCRYPTED_MESSAGE: ${name} (ID_${commId})`)
 		formData.append("from_name", "Okyere.Sys SSH_Bridge")
+		formData.append("replyto", "hello@johnokyere.xyz")
 
 		try {
 			const response = await fetch("https://api.web3forms.com/submit", {
