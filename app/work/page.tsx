@@ -80,7 +80,7 @@ export default function WorkPage() {
 								</p>
 
 								<div className="flex flex-wrap gap-2">
-									{project.stack?.map((tech, i) => (
+									{project.stack?.map((tech: string, i: number) => (
 										<span
 											key={`${tech}-${i}`}
 											className="px-2 py-0.5 bezel bg-accent/5 text-[9px] font-mono text-foreground uppercase tracking-tight"
