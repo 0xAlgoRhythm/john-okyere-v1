@@ -13,7 +13,6 @@ const writing = defineCollection({
     tags: z.array(z.string()).optional(),
     image: z.string().optional(),
   }),
-  transform: async (document: any, { collection, cache }: any) => {
   transform: async (document: any, { cache }: any) => {
     const mdx = await compileMDX({ cache }, document);
     return {
