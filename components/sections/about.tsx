@@ -10,27 +10,21 @@ import { SectionGrid, SectionTitle, SectionContent } from "@/components/ui/secti
 export function About() {
 	useEffect(() => {
 		const initCal = async () => {
-			const { getCalApi } = await import("@calcom/embed-react").catch(() => ({ getCalApi: null }));
-			if (getCalApi) {
-				const cal = await getCalApi({ namespace: "15m" });
-				cal("ui", { hideEventTypeDetails: false, layout: "month_view" });
-			} else {
-				// Fallback to script injection if package is missing
-				(function (C, A, L) {
-					let p = (function (ar, v) { return ar[v]; })(L, 0);
-					let q = (function (ar, v) { return ar[v]; })(L, 1);
-					// @ts-ignore
-					C.cal = C.cal || function () { (C.cal.q = C.cal.q || []).push(arguments); };
-					// @ts-ignore
-					let s = A.createElement("script"); s.async = true; s.src = p + "/embed/embed.js";
-					// @ts-ignore
-					let x = A.getElementsByTagName("script")[0]; x.parentNode.insertBefore(s, x);
-					// @ts-ignore
-					C.cal("init", q, { origin: p });
-					// @ts-ignore
-					C.cal("ui", { hideEventTypeDetails: false, layout: "month_view" });
-				})(window, document, ["https://cal.com", "15m"]);
-			}
+			// Using script injection directly to avoid build-time module resolution errors
+			(function (C, A, L) {
+				let p = (function (ar, v) { return ar[v]; })(L, 0);
+				let q = (function (ar, v) { return ar[v]; })(L, 1);
+				// @ts-ignore
+				C.cal = C.cal || function () { (C.cal.q = C.cal.q || []).push(arguments); };
+				// @ts-ignore
+				let s = A.createElement("script"); s.async = true; s.src = p + "/embed/embed.js";
+				// @ts-ignore
+				let x = A.getElementsByTagName("script")[0]; x.parentNode.insertBefore(s, x);
+				// @ts-ignore
+				C.cal("init", q, { origin: p });
+				// @ts-ignore
+				C.cal("ui", { hideEventTypeDetails: false, layout: "month_view" });
+			})(window, document, ["https://cal.com", "15m"]);
 		};
 		initCal();
 	}, []);
