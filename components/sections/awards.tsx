@@ -16,7 +16,7 @@ export function Awards() {
 			<SectionTitle>Recognition_Archive</SectionTitle>
 			<SectionContent>
 				<div className="flex flex-col bezel bg-cyan-500/[0.02] divide-y divide-border/40">
-					{sortedAwards.map((award) => (
+					{sortedAwards.map((award: any) => (
 						<div
 							key={`${award.year}-${award.title}`}
 							className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 p-3 hover:bg-cyan-500/[0.03] transition-colors"
