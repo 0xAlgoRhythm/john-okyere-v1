@@ -85,6 +85,6 @@ const awards = defineCollection({
 });
 
 export default defineConfig({
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  collections: [writing, work, experience, awards] as any,
+  // @ts-ignore – content-collections falsely rejects Promise<any> return types
+  collections: [writing, work, experience, awards],
 });
