@@ -104,17 +104,17 @@ export default function RootLayout({
 					<div className="vignette" />
 					<MouseGlow />
 					<ClientDither />
-					<ProgressiveBlur
-						className="pointer-events-none z-[500] fixed bottom-0 w-full h-20 hidden md:block"
-						direction="bottom"
-						blurIntensity={0.6}
-					/>
 					<Menu />
-					<div className="max-w-[52rem] mx-auto min-h-screen border-x border-border/40 bg-background/50 relative shadow-[0_0_50px_-12px_rgba(0,0,0,0.3)] dark:shadow-[0_0_50px_-12px_rgba(0,0,0,0.5)]">
+					<div className="max-w-[52rem] mx-auto min-h-screen border-x border-border/40 bg-background/50 relative shadow-[0_0_50px_-12px_rgba(0,0,0,0.3)] dark:shadow-[0_0_50px_-12px_rgba(0,0,0,0.5)] pb-10 md:pb-24">
 						<SystemBar />
 						<main className="w-full flex-1 pt-4 pb-4 sm:pt-6 sm:pb-6">{children}</main>
 						<Footer />
 					</div>
+					<ProgressiveBlur
+						className="pointer-events-none z-[500] fixed bottom-0 w-full h-12 hidden md:block"
+						direction="bottom"
+						blurIntensity={0.4}
+					/>
 					<ImageViewer />
 					<Analytics />
 				</ThemeProvider>
