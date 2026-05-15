@@ -7,27 +7,49 @@ import { siteConfig } from "@/config/site"
 
 import { SectionGrid, SectionTitle, SectionContent } from "@/components/ui/section-grid"
 
+declare global {
+	interface Window {
+		Cal?: any;
+	}
+}
+
 export function About() {
 	useEffect(() => {
-		const initCal = async () => {
-			// Using script injection directly to avoid build-time module resolution errors
-			(function (C, A, L) {
-				let p = (function (ar, v) { return ar[v]; })(L, 0);
-				let q = (function (ar, v) { return ar[v]; })(L, 1);
-				// @ts-ignore
-				C.cal = C.cal || function () { (C.cal.q = C.cal.q || []).push(arguments); };
-				// @ts-ignore
-				let s = A.createElement("script"); s.async = true; s.src = p + "/embed/embed.js";
-				// @ts-ignore
-				let x = A.getElementsByTagName("script")[0]; x.parentNode.insertBefore(s, x);
-				// @ts-ignore
-				C.cal("init", q, { origin: p });
-				// @ts-ignore
-				C.cal("ui", { hideEventTypeDetails: false, layout: "month_view" });
-			})(window, document, ["https://cal.com", "15m"]);
-		};
-		initCal();
+		// Bulletproof Cal.com Snippet Initialization
+		(function (C, A, L) {
+			let p = (function (ar, v) { return ar[v]; })(L, 0);
+			let q = (function (ar, v) { return ar[v]; })(L, 1);
+			// @ts-ignore
+			C.Cal = C.Cal || function () { (C.Cal.q = C.Cal.q || []).push(arguments); };
+			let s = A.createElement("script");
+			s.async = true;
+			s.src = p + "/embed/embed.js";
+			let x = A.getElementsByTagName("script")[0];
+			// @ts-ignore
+			x.parentNode.insertBefore(s, x);
+			// @ts-ignore
+			C.Cal("init", q, { origin: p });
+			// @ts-ignore
+			C.Cal("ui", { 
+				styles: { branding: { brandColor: "#06b6d4" } },
+				hideEventTypeDetails: false, 
+				layout: "month_view" 
+			});
+		})(window, document, ["https://cal.com", "15m"]);
 	}, []);
+
+	const handleBookCall = (e: React.MouseEvent) => {
+		e.preventDefault();
+		if (window.Cal) {
+			window.Cal("modal", {
+				calLink: "johnokyere/15m",
+				config: { layout: "month_view", useSlotsViewOnSmallScreen: true }
+			});
+		} else {
+			// Emergency Fallback
+			window.open("https://cal.com/johnokyere/15m", "_blank");
+		}
+	}
 
 	return (
 		<SectionGrid className="pt-0 pb-2">
@@ -41,9 +63,7 @@ export function About() {
 						
 						<div className="flex flex-wrap items-center gap-x-5 gap-y-2 mt-2">
 							<button
-								data-cal-namespace="15m"
-								data-cal-link="johnokyere/15m"
-								data-cal-config='{"layout":"month_view","useSlotsViewOnSmallScreen":"true"}'
+								onClick={handleBookCall}
 								className="group flex items-center gap-2 text-[11px] font-mono font-bold text-foreground hover:text-cyan-500 transition-all duration-300 cursor-pointer"
 							>
 								<div className="size-5 bezel flex items-center justify-center bg-accent/5 group-hover:bg-cyan-500/10 group-hover:border-cyan-500/50 transition-all">
