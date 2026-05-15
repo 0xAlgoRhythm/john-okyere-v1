@@ -1,13 +1,12 @@
 "use client"
 
-import React, { useState, useEffect } from "react"
+import React, { useState, useEffect, useRef } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import { cn } from "@/lib/utils"
 
 export function SSHPortal({ isOpen, onClose }: { isOpen: boolean, onClose: () => void }) {
-	const [step, setStep] = useState(0)
-	const [formData, setFormData] = useState({ name: "", email: "", message: "" })
 	const [logs, setLogs] = useState<string[]>(["ESTABLISHING_ENCRYPTED_TUNNEL...", "HANDSHAKE_SUCCESS", "READY_FOR_INPUT"])
+	const formRef = useRef<HTMLFormElement>(null)
 
 	const handleKeyDown = (e: React.KeyboardEvent) => {
 		if (e.key === "Escape") onClose()
@@ -18,7 +17,11 @@ export function SSHPortal({ isOpen, onClose }: { isOpen: boolean, onClose: () =>
 		setLogs(prev => [...prev, "PACKET_RECEIVED", "ENCRYPTING_MESSAGE...", "SENDING_TO_REMOTE_NODE..."])
 		
 		const formData = new FormData(e.currentTarget)
+		const name = formData.get("name") || "Remote_Operator"
+
 		formData.append("access_key", process.env.NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY || "")
+		formData.append("subject", `[Okyere.Sys] SSH_ENCRYPTED_MESSAGE: ${name}`)
+		formData.append("from_name", "Okyere.Sys SSH_Bridge")
 
 		try {
 			const response = await fetch("https://api.web3forms.com/submit", {
@@ -32,7 +35,7 @@ export function SSHPortal({ isOpen, onClose }: { isOpen: boolean, onClose: () =>
 				setTimeout(() => {
 					onClose()
 					setLogs(["ESTABLISHING_ENCRYPTED_TUNNEL...", "HANDSHAKE_SUCCESS", "READY_FOR_INPUT"])
-					setFormData({ name: "", email: "", message: "" })
+					formRef.current?.reset()
 				}, 2000)
 			} else {
 				setLogs(prev => [...prev, "ERROR: DISPATCH_FAILED", "RETRY_REQUIRED"])
@@ -73,7 +76,7 @@ export function SSHPortal({ isOpen, onClose }: { isOpen: boolean, onClose: () =>
 						))}
 					</div>
 
-					<form onSubmit={handleSubmit} className="space-y-4">
+					<form ref={formRef} onSubmit={handleSubmit} className="space-y-4">
 						<div className="space-y-2">
 							<div className="flex justify-between text-[9px] uppercase tracking-widest text-cyan-500/60 font-bold">
 								<span>Field: NAME</span>
@@ -83,8 +86,6 @@ export function SSHPortal({ isOpen, onClose }: { isOpen: boolean, onClose: () =>
 								name="name"
 								autoFocus
 								required
-								value={formData.name}
-								onChange={e => setFormData(f => ({ ...f, name: e.target.value }))}
 								className="w-full bg-accent/5 border border-border/40 p-2 outline-none focus:border-cyan-500/50 transition-colors"
 								placeholder="ENTER_IDENTIFIER..."
 							/>
@@ -98,8 +99,6 @@ export function SSHPortal({ isOpen, onClose }: { isOpen: boolean, onClose: () =>
 								name="email"
 								type="email"
 								required
-								value={formData.email}
-								onChange={e => setFormData(f => ({ ...f, email: e.target.value }))}
 								className="w-full bg-accent/5 border border-border/40 p-2 outline-none focus:border-cyan-500/50 transition-colors"
 								placeholder="ENTER_RETURN_PATH..."
 							/>
@@ -113,8 +112,6 @@ export function SSHPortal({ isOpen, onClose }: { isOpen: boolean, onClose: () =>
 								name="message"
 								required
 								rows={4}
-								value={formData.message}
-								onChange={e => setFormData(f => ({ ...f, message: e.target.value }))}
 								className="w-full bg-accent/5 border border-border/40 p-2 outline-none focus:border-cyan-500/50 transition-colors resize-none"
 								placeholder="ENTER_PAYLOAD_DATA..."
 							/>

@@ -1,13 +1,13 @@
 "use client"
 
-import React, { useState, useEffect } from "react"
+import React, { useState, useEffect, useRef } from "react"
 import { motion } from "framer-motion"
 import { SubPageNav } from "@/components/ui/sub-page-nav"
 
 export default function ContactPage() {
-	const [formData, setFormData] = useState({ name: "", email: "", message: "" })
 	const [logs, setLogs] = useState<string[]>(["SYSTEM_READY", "AWAITING_INPUT_PAYLOAD..."])
 	const [isSubmitting, setIsSubmitting] = useState(false)
+	const formRef = useRef<HTMLFormElement>(null)
 
 	const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault()
@@ -15,7 +15,11 @@ export default function ContactPage() {
 		setLogs(prev => [...prev, "ENCRYPTING_MESSAGE...", "ESTABLISHING_SECURE_TUNNEL...", "DISPATCHING_PACKETS..."])
 		
 		const formData = new FormData(e.currentTarget)
+		const name = formData.get("name") || "Anonymous_Node"
+		
 		formData.append("access_key", process.env.NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY || "")
+		formData.append("subject", `[Okyere.Sys] NEW_INBOUND_COMMUNICATION: ${name}`)
+		formData.append("from_name", "Okyere.Sys Mission Control")
 
 		try {
 			const response = await fetch("https://api.web3forms.com/submit", {
@@ -26,7 +30,7 @@ export default function ContactPage() {
 			const data = await response.json()
 			if (data.success) {
 				setLogs(prev => [...prev, "SUCCESS: MESSAGE_RECEIVED", "TERMINATING_CONNECTION"])
-				setFormData({ name: "", email: "", message: "" })
+				formRef.current?.reset()
 			} else {
 				setLogs(prev => [...prev, "ERROR: HANDSHAKE_FAILED", "RETRY_REQUIRED"])
 			}
@@ -66,15 +70,13 @@ export default function ContactPage() {
 							))}
 						</div>
 
-						<form onSubmit={handleSubmit} className="space-y-6">
+						<form ref={formRef} onSubmit={handleSubmit} className="space-y-6">
 							<div className="grid grid-cols-1 md:grid-cols-2 gap-6">
 								<div className="space-y-2">
 									<label className="text-[9px] uppercase tracking-widest text-cyan-500/60 font-bold">Identifier (Name)</label>
 									<input
 										name="name"
 										required
-										value={formData.name}
-										onChange={e => setFormData(f => ({ ...f, name: e.target.value }))}
 										className="w-full bg-accent/5 border border-border/40 p-3 text-xs outline-none focus:border-cyan-500/50 transition-colors"
 										placeholder="ENTER_NAME..."
 									/>
@@ -85,8 +87,6 @@ export default function ContactPage() {
 										name="email"
 										type="email"
 										required
-										value={formData.email}
-										onChange={e => setFormData(f => ({ ...f, email: e.target.value }))}
 										className="w-full bg-accent/5 border border-border/40 p-3 text-xs outline-none focus:border-cyan-500/50 transition-colors"
 										placeholder="ENTER_EMAIL..."
 									/>
@@ -99,8 +99,6 @@ export default function ContactPage() {
 									name="message"
 									required
 									rows={5}
-									value={formData.message}
-									onChange={e => setFormData(f => ({ ...f, message: e.target.value }))}
 									className="w-full bg-accent/5 border border-border/40 p-3 text-xs outline-none focus:border-cyan-500/50 transition-colors resize-none"
 									placeholder="ENTER_MESSAGE_DATA..."
 								/>
