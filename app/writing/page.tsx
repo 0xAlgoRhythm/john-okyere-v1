@@ -35,7 +35,7 @@ export default function WritingPage() {
 
 			<div className="space-y-4 pb-16">
 				<div className="bezel bg-accent/5 divide-y divide-border/20">
-					{sortedPosts.map((post, index) => (
+					{sortedPosts.map((post: any, index: number) => (
 						<Link
 							key={post._meta.path}
 							href={`/writing/${post._meta.path}`}

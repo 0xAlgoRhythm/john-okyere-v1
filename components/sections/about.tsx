@@ -30,7 +30,7 @@ export function About() {
 			// @ts-ignore
 			C.Cal("init", q, { origin: p });
 			// @ts-ignore
-			C.Cal("ui", { 
+			C.Cal("ns:15m", "ui", { 
 				styles: { branding: { brandColor: "#06b6d4" } },
 				hideEventTypeDetails: false, 
 				layout: "month_view" 
@@ -44,7 +44,7 @@ export function About() {
 		// Defer heavy modal logic to yield the main thread for immediate paint
 		setTimeout(() => {
 			if (window.Cal) {
-				window.Cal("modal", {
+				window.Cal("ns:15m", "modal", {
 					calLink: "johnokyere/15m",
 					config: { layout: "month_view", useSlotsViewOnSmallScreen: true }
 				});

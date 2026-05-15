@@ -79,7 +79,7 @@ export default async function WritingDetailPage({ params }: WritingPageProps) {
 						</div>
 						{post.tags && post.tags.length > 0 && (
 							<div className="flex gap-2">
-								{post.tags.map((tag) => (
+								{post.tags.map((tag: string) => (
 									<span key={tag} className="px-1.5 py-0.5 bezel bg-accent/5 text-[9px] font-mono text-cyan-500">
 										#{tag.toUpperCase()}
 									</span>

@@ -32,7 +32,7 @@ export default function WorkPage() {
 			</section>
 
 			<div className="space-y-12 pb-16">
-				{sortedProjects.map((project, index) => (
+				{sortedProjects.map((project: any, index: number) => (
 					<div
 						key={project._meta.path}
 						className="group grid grid-cols-1 md:grid-cols-12 gap-8 items-start"

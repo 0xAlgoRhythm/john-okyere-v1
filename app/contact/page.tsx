@@ -64,7 +64,7 @@ export default function ContactPage() {
 				<div className="bezel bg-accent/5 border border-border/40 p-1">
 					<div className="bg-background border border-border/40 p-6 md:p-8 space-y-8 font-mono">
 						<div className="space-y-1 text-[10px] text-muted-foreground/60 border-b border-border/20 pb-6">
-							{logs.map((log, i) => (
+							{logs.map((log: string, i: number) => (
 								<div key={i} className="flex gap-4">
 									<span className="text-cyan-500/40">[{i.toString().padStart(2, "0")}]</span>
 									<span>{log}</span>
@@ -121,7 +121,7 @@ export default function ContactPage() {
 						{ label: "GITHUB", value: "mhiskall282", href: "https://github.com/mhiskall282" },
 						{ label: "X_TWITTER", value: "@0xmhiskall", href: "https://x.com/0xmhiskall" },
 						{ label: "LINKEDIN", value: "johnokyere", href: "https://linkedin.com/in/johnokyere" }
-					].map((social) => (
+					].map((social: any) => (
 						<a 
 							key={social.label}
 							href={social.href}
