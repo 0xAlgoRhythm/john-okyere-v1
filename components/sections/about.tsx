@@ -1,11 +1,11 @@
 "use client"
-import React, { useEffect } from "react"
-import { ArrowUpRight03Icon, Calendar03Icon, Mail01Icon, GithubIcon, Linkedin01Icon } from "@hugeicons/core-free-icons"
+import React from "react"
+import Script from "next/script"
+import { Calendar03Icon, Mail01Icon } from "@hugeicons/core-free-icons"
 import { HugeiconsIcon } from "@hugeicons/react"
-import Image from "next/image"
 import { siteConfig } from "@/config/site"
 
-import { SectionGrid, SectionTitle, SectionContent } from "@/components/ui/section-grid"
+import { SectionGrid, SectionContent } from "@/components/ui/section-grid"
 
 declare global {
 	interface Window {
@@ -14,90 +14,74 @@ declare global {
 }
 
 export function About() {
-	useEffect(() => {
-		// Bulletproof Cal.com Snippet Initialization
-		(function (C, A, L) {
-			let p = (function (ar, v) { return ar[v]; })(L, 0);
-			let q = (function (ar, v) { return ar[v]; })(L, 1);
-			// @ts-ignore
-			C.Cal = C.Cal || function () { (C.Cal.q = C.Cal.q || []).push(arguments); };
-			let s = A.createElement("script");
-			s.async = true;
-			s.src = p + "/embed/embed.js";
-			let x = A.getElementsByTagName("script")[0];
-			// @ts-ignore
-			x.parentNode.insertBefore(s, x);
-			// @ts-ignore
-			C.Cal("init", q, { origin: p });
-			// @ts-ignore
-			C.Cal("ns:15m", "ui", { 
-				styles: { branding: { brandColor: "#06b6d4" } },
-				hideEventTypeDetails: false, 
-				layout: "month_view" 
-			});
-		})(window, document, ["https://cal.com", "15m"]);
-	}, []);
-
-	const handleBookCall = (e: React.MouseEvent) => {
-		e.preventDefault();
-		
-		// Defer heavy modal logic to yield the main thread for immediate paint
-		setTimeout(() => {
-			if (window.Cal) {
-				window.Cal("ns:15m", "modal", {
-					calLink: "johnokyere/15m",
-					config: { layout: "month_view", useSlotsViewOnSmallScreen: true }
-				});
-			} else {
-				// Emergency Fallback
-				window.open("https://cal.com/johnokyere/15m", "_blank");
-			}
-		}, 0);
-	}
-
 	return (
-		<SectionGrid className="pt-0 pb-2">
-			<SectionContent className="space-y-6">
-				<div className="flex flex-col gap-6">
-					<div className="text-[15px] text-muted-foreground text-pretty space-y-4 max-w-2xl leading-relaxed">
-						<p>
-							I design and build <span className="text-foreground font-medium">AI-powered</span> and{" "}
-							<span className="text-foreground font-medium">on-chain systems</span> that solve real-world problems, with a focus on performance and scalability.
-						</p>
-						
-						<div className="flex flex-wrap items-center gap-x-5 gap-y-2 mt-2">
-							<button
-								onClick={handleBookCall}
-								className="group flex items-center gap-2 text-[11px] font-mono font-bold text-foreground hover:text-cyan-500 transition-all duration-300 cursor-pointer"
-							>
-								<div className="size-5 bezel flex items-center justify-center bg-accent/5 group-hover:bg-cyan-500/10 group-hover:border-cyan-500/50 transition-all">
-									<HugeiconsIcon icon={Calendar03Icon} size={12} strokeWidth={2} className="text-muted-foreground group-hover:text-cyan-500" />
-								</div>
-								<span className="border-b border-border group-hover:border-cyan-500/50 uppercase tracking-widest">Book_Call</span>
-							</button>
-							<a
-								href={siteConfig.links.email}
-								className="group flex items-center gap-2 text-[11px] font-mono font-bold text-foreground hover:text-emerald-500 transition-all duration-300"
-							>
-								<div className="size-5 bezel flex items-center justify-center bg-accent/5 group-hover:bg-emerald-500/10 group-hover:border-emerald-500/50 transition-all">
-									<HugeiconsIcon icon={Mail01Icon} size={12} strokeWidth={2} className="text-muted-foreground group-hover:text-emerald-500" />
-								</div>
-								<span className="border-b border-border group-hover:border-emerald-500/50 uppercase tracking-widest">Send_Email</span>
-							</a>
-						</div>
-					</div>
+		<>
+			{/* Cal.com embed — loaded AFTER DOM ready, init called in onLoad to avoid race conditions */}
+			<Script
+				src="https://cal.com/embed/embed.js"
+				strategy="lazyOnload"
+				onLoad={() => {
+					// Script is fully loaded — safe to call Cal now
+					if (window.Cal) {
+						window.Cal("init", "15m", { origin: "https://cal.com" });
+						if (window.Cal.ns?.["15m"]) {
+							window.Cal.ns["15m"]("ui", {
+								styles: { branding: { brandColor: "#06b6d4" } },
+								hideEventTypeDetails: false,
+								layout: "month_view",
+							});
+						}
+					}
+				}}
+			/>
 
-					<div className="bezel bg-accent/5 p-3 max-w-xl">
-						<div className="flex items-center gap-2 mb-1.5 font-mono text-[9px] text-cyan-500">
-							<span className="animate-pulse">●</span>
-							<span>PREVIOUS_ENGAGEMENT: CREDAXIS</span>
+			<SectionGrid className="pt-0 pb-2">
+				<SectionContent className="space-y-6">
+					<div className="flex flex-col gap-6">
+						<div className="text-[15px] text-muted-foreground text-pretty space-y-4 max-w-2xl leading-relaxed">
+							<p>
+								I design and build <span className="text-foreground font-medium">AI-powered</span> and{" "}
+								<span className="text-foreground font-medium">on-chain systems</span> that solve real-world problems, with a focus on performance and scalability.
+							</p>
+
+							<div className="flex flex-wrap items-center gap-x-5 gap-y-2 mt-2">
+								{/* data-cal-* attributes let Cal.com handle clicks automatically — no custom onClick needed */}
+								<button
+									data-cal-namespace="15m"
+									data-cal-link="johnokyere/15m"
+									data-cal-config='{"layout":"month_view","useSlotsViewOnSmallScreen":true}'
+									className="group flex items-center gap-2 text-[11px] font-mono font-bold text-foreground hover:text-cyan-500 transition-all duration-300 cursor-pointer"
+								>
+									<div className="size-5 bezel flex items-center justify-center bg-accent/5 group-hover:bg-cyan-500/10 group-hover:border-cyan-500/50 transition-all">
+										<HugeiconsIcon icon={Calendar03Icon} size={12} strokeWidth={2} className="text-muted-foreground group-hover:text-cyan-500" />
+									</div>
+									<span className="border-b border-border group-hover:border-cyan-500/50 uppercase tracking-widest">Book_Call</span>
+								</button>
+
+								<a
+									href={siteConfig.links.email}
+									className="group flex items-center gap-2 text-[11px] font-mono font-bold text-foreground hover:text-emerald-500 transition-all duration-300"
+								>
+									<div className="size-5 bezel flex items-center justify-center bg-accent/5 group-hover:bg-emerald-500/10 group-hover:border-emerald-500/50 transition-all">
+										<HugeiconsIcon icon={Mail01Icon} size={12} strokeWidth={2} className="text-muted-foreground group-hover:text-emerald-500" />
+									</div>
+									<span className="border-b border-border group-hover:border-emerald-500/50 uppercase tracking-widest">Send_Email</span>
+								</a>
+							</div>
 						</div>
-						<p className="text-[12px] leading-relaxed italic text-muted-foreground">
-							"Built and shipped cloud and blockchain solutions across multiple domains."
-						</p>
+
+						<div className="bezel bg-accent/5 p-3 max-w-xl">
+							<div className="flex items-center gap-2 mb-1.5 font-mono text-[9px] text-cyan-500">
+								<span className="animate-pulse">●</span>
+								<span>PREVIOUS_ENGAGEMENT: CREDAXIS</span>
+							</div>
+							<p className="text-[12px] leading-relaxed italic text-muted-foreground">
+								"Built and shipped cloud and blockchain solutions across multiple domains."
+							</p>
+						</div>
 					</div>
-				</div>
-			</SectionContent>
-		</SectionGrid>
+				</SectionContent>
+			</SectionGrid>
+		</>
 	)
 }
