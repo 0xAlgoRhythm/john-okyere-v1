@@ -85,5 +85,6 @@ const awards = defineCollection({
 });
 
 export default defineConfig({
-  collections: [writing, work, experience, awards],
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  collections: [writing, work, experience, awards] as any,
 });
