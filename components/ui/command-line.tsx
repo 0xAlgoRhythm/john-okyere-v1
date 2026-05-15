@@ -4,14 +4,13 @@ import React, { useState, useRef, useEffect } from "react"
 import { useRouter } from "next/navigation"
 
 export function CommandLine() {
-	const [input, setInput] = useState("")
 	const [isFocused, setIsFocused] = useState(false)
 	const router = useRouter()
 	const inputRef = useRef<HTMLInputElement>(null)
 
 	const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-		if (e.key === "Enter") {
-			const cmd = input.trim().toLowerCase()
+		if (e.key === "Enter" && inputRef.current) {
+			const cmd = inputRef.current.value.trim().toLowerCase()
 			
 			if (cmd === "cd work" || cmd === "cd projects") {
 				router.push("/work")
@@ -25,7 +24,7 @@ export function CommandLine() {
 				alert("Commands: cd [work|writing|home], ls, help, clear")
 			}
 			
-			setInput("")
+			inputRef.current.value = ""
 		}
 	}
 
@@ -39,8 +38,6 @@ export function CommandLine() {
 				<input
 					ref={inputRef}
 					type="text"
-					value={input}
-					onChange={(e) => setInput(e.target.value)}
 					onKeyDown={handleKeyDown}
 					onFocus={() => setIsFocused(true)}
 					onBlur={() => setIsFocused(false)}
@@ -49,8 +46,10 @@ export function CommandLine() {
 					spellCheck={false}
 					autoComplete="off"
 				/>
-				{isFocused && input === "" && (
-					<span className="absolute left-0 w-1.5 h-3.5 bg-cyan-500/50 animate-caret-blink" />
+				{isFocused && (
+					<span className="absolute left-0 w-1.5 h-3.5 bg-cyan-500/50 animate-caret-blink pointer-events-none opacity-0 group-focus-within:opacity-100" 
+						style={{ display: inputRef.current?.value ? 'none' : 'block' }}
+					/>
 				)}
 			</div>
 		</div>
