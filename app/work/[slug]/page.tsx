@@ -114,7 +114,7 @@ export default async function WorkDetailPage({ params }: WorkPageProps) {
 										# Tech_Modules
 									</h3>
 									<div className="flex flex-wrap gap-2">
-										{project.stack.map((tech) => (
+										{project.stack.map((tech: string) => (
 											<span
 												key={tech}
 												className="px-2 py-0.5 bezel bg-background text-[9px] font-mono text-foreground uppercase"
