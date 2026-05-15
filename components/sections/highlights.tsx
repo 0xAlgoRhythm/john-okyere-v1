@@ -185,7 +185,7 @@ const HighlightImage = React.memo(function HighlightImage({
 					alt={alt}
 					width={600} // Reduced from 800 for better performance in grid/carousel
 					height={450}
-					className="w-full h-full object-cover grayscale group-hover/img:grayscale-0 group-hover/img:scale-105 transition-all duration-700"
+					className="w-full h-full object-cover grayscale group-hover/img:grayscale-0 group-hover/img:scale-105 transition-[transform,filter] duration-700 will-change-transform"
 					style={{
 						WebkitFilter: isLoading ? "blur(8px)" : "none",
 					}}

@@ -8,7 +8,7 @@
  * Platform API product and cannot be used for a personal portfolio.
  */
 
-import React, { useState, useCallback } from "react"
+import React, { useState, useCallback, useTransition } from "react"
 import * as Dialog from "@radix-ui/react-dialog"
 import * as VisuallyHidden from "@radix-ui/react-visually-hidden"
 import { Calendar03Icon, Cancel01Icon } from "@hugeicons/core-free-icons"
@@ -27,10 +27,18 @@ interface CalBookingModalProps {
 export function CalBookingModal({ trigger }: CalBookingModalProps) {
 	const [open, setOpen] = useState(false)
 	const [iframeLoaded, setIframeLoaded] = useState(false)
+	const [, startTransition] = useTransition()
 
 	const handleOpenChange = useCallback((nextOpen: boolean) => {
-		setOpen(nextOpen)
-		if (!nextOpen) setIframeLoaded(false)
+		if (nextOpen) {
+			// Defer the heavy Dialog mount (Portal + Overlay + Content + iframe)
+			// so the browser paints the button's active state before blocking.
+			startTransition(() => setOpen(true))
+		} else {
+			// Close is cheap — run synchronously for instant feel
+			setOpen(false)
+			setIframeLoaded(false)
+		}
 	}, [])
 
 	return (
