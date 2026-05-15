@@ -84,6 +84,7 @@ export function Menu() {
     // Prefetch routes
     router.prefetch("/writing");
     router.prefetch("/work");
+    router.prefetch("/contact");
 
     // Toggle the menu when ⌘K or Ctrl+K is pressed
     const down = (e: KeyboardEvent) => {
@@ -150,6 +151,13 @@ export function Menu() {
                 <span className="text-muted-foreground opacity-50">03</span>
                 <HugeiconsIcon icon={Folder01Icon} size={14} strokeWidth={2} />
                 <span>/projects</span>
+              </div>
+            </Command.Item>
+            <Command.Item onSelect={() => navigate("/contact")}>
+              <div className="flex items-center gap-3 text-foreground font-mono text-sm">
+                <span className="text-muted-foreground opacity-50">04</span>
+                <HugeiconsIcon icon={Mail01Icon} size={14} strokeWidth={2} />
+                <span>/contact</span>
               </div>
             </Command.Item>
           </Command.Group>

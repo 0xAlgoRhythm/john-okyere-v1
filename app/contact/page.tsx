@@ -9,22 +9,37 @@ export default function ContactPage() {
 	const [logs, setLogs] = useState<string[]>(["SYSTEM_READY", "AWAITING_INPUT_PAYLOAD..."])
 	const [isSubmitting, setIsSubmitting] = useState(false)
 
-	const handleSubmit = (e: React.FormEvent) => {
+	const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault()
 		setIsSubmitting(true)
 		setLogs(prev => [...prev, "ENCRYPTING_MESSAGE...", "ESTABLISHING_SECURE_TUNNEL...", "DISPATCHING_PACKETS..."])
 		
-		// Simulate submission
-		setTimeout(() => {
-			setLogs(prev => [...prev, "SUCCESS: MESSAGE_RECEIVED", "TERMINATING_CONNECTION"])
+		const formData = new FormData(e.currentTarget)
+		formData.append("access_key", process.env.NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY || "")
+
+		try {
+			const response = await fetch("https://api.web3forms.com/submit", {
+				method: "POST",
+				body: formData
+			})
+
+			const data = await response.json()
+			if (data.success) {
+				setLogs(prev => [...prev, "SUCCESS: MESSAGE_RECEIVED", "TERMINATING_CONNECTION"])
+				setFormData({ name: "", email: "", message: "" })
+			} else {
+				setLogs(prev => [...prev, "ERROR: HANDSHAKE_FAILED", "RETRY_REQUIRED"])
+			}
+		} catch (error) {
+			setLogs(prev => [...prev, "ERROR: CONNECTION_TIMEOUT", "SYSTEM_OFFLINE"])
+		} finally {
 			setIsSubmitting(false)
-			setFormData({ name: "", email: "", message: "" })
-		}, 3000)
+		}
 	}
 
 	return (
 		<div className="px-6 md:px-10 space-y-12 pb-20">
-			<SubPageNav title="CONTACT_PORTAL" />
+			<SubPageNav path={[{ label: "CONTACT_PORTAL" }]} />
 
 			<div className="max-w-2xl mx-auto space-y-8">
 				<div className="space-y-2">
@@ -56,6 +71,7 @@ export default function ContactPage() {
 								<div className="space-y-2">
 									<label className="text-[9px] uppercase tracking-widest text-cyan-500/60 font-bold">Identifier (Name)</label>
 									<input
+										name="name"
 										required
 										value={formData.name}
 										onChange={e => setFormData(f => ({ ...f, name: e.target.value }))}
@@ -66,6 +82,7 @@ export default function ContactPage() {
 								<div className="space-y-2">
 									<label className="text-[9px] uppercase tracking-widest text-cyan-500/60 font-bold">Return_Path (Email)</label>
 									<input
+										name="email"
 										type="email"
 										required
 										value={formData.email}
@@ -79,6 +96,7 @@ export default function ContactPage() {
 							<div className="space-y-2">
 								<label className="text-[9px] uppercase tracking-widest text-cyan-500/60 font-bold">Payload (Message)</label>
 								<textarea
+									name="message"
 									required
 									rows={5}
 									value={formData.message}
@@ -100,9 +118,9 @@ export default function ContactPage() {
 
 				<div className="grid grid-cols-1 md:grid-cols-3 gap-6 pt-12">
 					{[
-						{ label: "GITHUB", value: "okyerejay", href: "https://github.com/okyerejay" },
-						{ label: "X_TWITTER", value: "@okyerejay", href: "https://x.com/okyerejay" },
-						{ label: "LINKEDIN", value: "john-okyere", href: "https://linkedin.com/in/john-okyere" }
+						{ label: "GITHUB", value: "mhiskall282", href: "https://github.com/mhiskall282" },
+						{ label: "X_TWITTER", value: "@0xmhiskall", href: "https://x.com/0xmhiskall" },
+						{ label: "LINKEDIN", value: "johnokyere", href: "https://linkedin.com/in/johnokyere" }
 					].map((social) => (
 						<a 
 							key={social.label}

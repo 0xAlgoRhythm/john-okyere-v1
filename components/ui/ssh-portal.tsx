@@ -13,14 +13,33 @@ export function SSHPortal({ isOpen, onClose }: { isOpen: boolean, onClose: () =>
 		if (e.key === "Escape") onClose()
 	}
 
-	const handleSubmit = (e: React.FormEvent) => {
+	const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault()
-		setLogs(prev => [...prev, "PACKET_RECEIVED", "ENCRYPTING_MESSAGE...", "SENDING_TO_REMOTE_NODE...", "SUCCESS: MESSAGE_DISPATCHED"])
-		setTimeout(() => {
-			onClose()
-			setStep(0)
-			setLogs(["ESTABLISHING_ENCRYPTED_TUNNEL...", "HANDSHAKE_SUCCESS", "READY_FOR_INPUT"])
-		}, 3000)
+		setLogs(prev => [...prev, "PACKET_RECEIVED", "ENCRYPTING_MESSAGE...", "SENDING_TO_REMOTE_NODE..."])
+		
+		const formData = new FormData(e.currentTarget)
+		formData.append("access_key", process.env.NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY || "")
+
+		try {
+			const response = await fetch("https://api.web3forms.com/submit", {
+				method: "POST",
+				body: formData
+			})
+
+			const data = await response.json()
+			if (data.success) {
+				setLogs(prev => [...prev, "SUCCESS: MESSAGE_DISPATCHED", "CONNECTION_TERMINATED"])
+				setTimeout(() => {
+					onClose()
+					setLogs(["ESTABLISHING_ENCRYPTED_TUNNEL...", "HANDSHAKE_SUCCESS", "READY_FOR_INPUT"])
+					setFormData({ name: "", email: "", message: "" })
+				}, 2000)
+			} else {
+				setLogs(prev => [...prev, "ERROR: DISPATCH_FAILED", "RETRY_REQUIRED"])
+			}
+		} catch (error) {
+			setLogs(prev => [...prev, "ERROR: NODE_UNREACHABLE"])
+		}
 	}
 
 	if (!isOpen) return null
@@ -61,6 +80,7 @@ export function SSHPortal({ isOpen, onClose }: { isOpen: boolean, onClose: () =>
 								<span>Required</span>
 							</div>
 							<input
+								name="name"
 								autoFocus
 								required
 								value={formData.name}
@@ -75,6 +95,7 @@ export function SSHPortal({ isOpen, onClose }: { isOpen: boolean, onClose: () =>
 								<span>Required</span>
 							</div>
 							<input
+								name="email"
 								type="email"
 								required
 								value={formData.email}
@@ -89,6 +110,7 @@ export function SSHPortal({ isOpen, onClose }: { isOpen: boolean, onClose: () =>
 								<span>Required</span>
 							</div>
 							<textarea
+								name="message"
 								required
 								rows={4}
 								value={formData.message}

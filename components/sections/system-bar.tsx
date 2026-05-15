@@ -48,11 +48,11 @@ export function SystemBar() {
 				<span>{getPageName()}</span>
 			</div>
 
-			<div className="flex items-center gap-6 shrink-0 ml-4">
-				<div className="hidden sm:flex items-center gap-3">
-					<span className="opacity-40 text-[8px]">CPU:</span>
-					<div className="flex items-end gap-0.5 h-3">
-						{[1, 2, 3, 4, 5, 6].map((i) => (
+			<div className="flex items-center gap-4 sm:gap-6 shrink-0 ml-auto sm:ml-4">
+				<div className="flex items-center gap-2 sm:gap-3">
+					<span className="opacity-40 text-[7px] sm:text-[8px]">CPU:</span>
+					<div className="flex items-end gap-0.5 h-2.5 sm:h-3">
+						{[1, 2, 3, 4].map((i) => (
 							<motion.div
 								key={i}
 								animate={{ height: ["20%", "80%", "40%", "100%", "30%"] }}
@@ -63,7 +63,7 @@ export function SystemBar() {
 					</div>
 				</div>
 
-				<div className="hidden lg:flex items-center gap-4 px-4 border-x border-border/40">
+				<div className="hidden sm:flex items-center gap-4 px-4 border-x border-border/40">
 					<span className="opacity-40 text-[8px]">TX_LIVE:</span>
 					<div className="flex items-end gap-0.5 h-3">
 						{[1, 2, 3].map((i) => (
@@ -79,8 +79,8 @@ export function SystemBar() {
 				</div>
 
 				<div className="flex items-center gap-2 tabular-nums">
-					<span className="opacity-40">UTC:</span>
-					<span>{time}</span>
+					<span className="opacity-40 hidden xs:inline">UTC:</span>
+					<span className="text-[9px] sm:text-[10px]">{time || "00:00:00"}</span>
 				</div>
 				<button
 					onClick={openMenu}
