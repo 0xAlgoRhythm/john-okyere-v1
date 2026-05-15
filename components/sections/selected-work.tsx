@@ -72,6 +72,7 @@ export function SelectedWork() {
 											src={project.image}
 											alt={project.title}
 											fill
+											sizes="(max-width: 768px) 100vw, 50vw"
 											className="object-cover"
 										/>
 										<div className="absolute inset-0 bg-gradient-to-t from-background/80 to-transparent opacity-60" />
