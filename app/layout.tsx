@@ -8,7 +8,7 @@ import { ImageViewer } from "@/components/shells/image-viewer"
 import { siteConfig } from "@/config/site"
 import { Footer } from "@/components/ui/footer"
 import { MouseGlow } from "@/components/ui/mouse-glow"
-import { ProgressiveBlur } from "@/components/ui/progressive-blur"
+import { SystemLoader } from "@/components/ui/system-loader"
 import ClientDither from "@/components/dither/client-dither"
 import { Analytics } from "@vercel/analytics/next"
 
@@ -100,21 +100,17 @@ export default function RootLayout({
 				className={`${inter.variable} ${mono.variable} ${spaceGrotesk.variable} min-h-screen antialiased font-sans noise-overlay selection:bg-cyan-500/30`}
 			>
 				<ThemeProvider attribute="class" defaultTheme="dark" disableTransitionOnChange>
+					<SystemLoader />
 					<div className="scanline-effect" />
 					<div className="vignette" />
 					<MouseGlow />
 					<ClientDither />
 					<Menu />
-					<div className="max-w-[52rem] mx-auto min-h-screen border-x border-border/40 bg-background/50 relative shadow-[0_0_50px_-12px_rgba(0,0,0,0.3)] dark:shadow-[0_0_50px_-12px_rgba(0,0,0,0.5)] pb-10 md:pb-24">
+					<div className="max-w-[52rem] mx-auto min-h-screen border-x border-border/40 bg-background/50 relative shadow-[0_0_50px_-12px_rgba(0,0,0,0.3)] dark:shadow-[0_0_50px_-12px_rgba(0,0,0,0.5)]">
 						<SystemBar />
 						<main className="w-full flex-1 pt-4 pb-4 sm:pt-6 sm:pb-6">{children}</main>
 						<Footer />
 					</div>
-					<ProgressiveBlur
-						className="pointer-events-none z-[500] fixed bottom-0 w-full h-12 hidden md:block"
-						direction="bottom"
-						blurIntensity={0.4}
-					/>
 					<ImageViewer />
 					<Analytics />
 				</ThemeProvider>
