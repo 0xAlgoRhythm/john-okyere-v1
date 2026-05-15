@@ -23,7 +23,6 @@ export function About() {
 								trigger={
 									<button
 										id="book-call-trigger"
-										aria-label="Book a 15-minute call with John Okyere"
 										className="group flex items-center gap-2 text-[11px] font-mono font-bold text-foreground hover:text-cyan-500 transition-all duration-300 cursor-pointer"
 									>
 										<div className="size-5 bezel flex items-center justify-center bg-accent/5 group-hover:bg-cyan-500/10 group-hover:border-cyan-500/50 transition-all">
@@ -32,6 +31,7 @@ export function About() {
 												size={12}
 												strokeWidth={2}
 												className="text-muted-foreground group-hover:text-cyan-500"
+												aria-hidden="true"
 											/>
 										</div>
 										<span className="border-b border-border group-hover:border-cyan-500/50 uppercase tracking-widest">
@@ -51,6 +51,7 @@ export function About() {
 										size={12}
 										strokeWidth={2}
 										className="text-muted-foreground group-hover:text-emerald-500"
+										aria-hidden="true"
 									/>
 								</div>
 								<span className="border-b border-border group-hover:border-emerald-500/50 uppercase tracking-widest">
