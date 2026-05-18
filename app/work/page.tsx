@@ -13,7 +13,7 @@ import { SubPageNav } from "@/components/ui/sub-page-nav"
 
 export default function WorkPage() {
 	const sortedProjects = [...allWorks]
-		.filter(project => project._meta.path === "credaxis" || project._meta.path === "sui-copilot")
+		.filter(project => project._meta.path === "credaxis" || project._meta.path === "sui-copilot" || project._meta.path === "orbital-protocol")
 		.sort((a, b) => a.sort - b.sort)
 
 	return (

@@ -20,7 +20,7 @@ function getStatus(raw: string): { label: string; dot: string } {
 export function SelectedWork() {
 	const sortedProjects = [...allWorks].sort((a, b) => a.sort - b.sort)
 	const featuredProjects = sortedProjects.filter(project => 
-		project._meta.path === "credaxis" || project._meta.path === "sui-copilot"
+		project._meta.path === "credaxis" || project._meta.path === "sui-copilot" || project._meta.path === "orbital-protocol"
 	)
 
 	return (
