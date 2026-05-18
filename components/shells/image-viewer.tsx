@@ -7,18 +7,25 @@ import React from "react";
 
 export function ImageViewer() {
   const [isImageLoading, setImageLoading] = React.useState(true);
-  const { setDialogOpen, isDialogOpen, selectedImage } = useImageStore();
+  const { setDialogOpen, isDialogOpen, selectedImage, selectedImageAlt } = useImageStore();
+
+  // Reset loading state when image changes
+  React.useEffect(() => {
+    setImageLoading(true);
+  }, [selectedImage]);
 
   return (
     <Dialog open={isDialogOpen} onOpenChange={setDialogOpen}>
       <DialogContent className="w-full max-w-screen-lg p-0 sm:rounded-xl overflow-hidden border-none bg-transparent shadow-none">
-        <DialogTitle className="sr-only">Image Preview</DialogTitle>
+        <DialogTitle className="sr-only">
+          {selectedImageAlt ? `Image: ${selectedImageAlt}` : "Image Preview"}
+        </DialogTitle>
         <DialogDescription className="sr-only">
-          Full screen view of the selected image.
+          Full screen view of highlight image. Press Escape to close.
         </DialogDescription>
         {selectedImage && (
           <Image
-            alt="Image Preview"
+            alt={selectedImageAlt || "Highlight image"}
             src={selectedImage}
             width={1200}
             height={800}

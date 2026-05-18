@@ -64,6 +64,15 @@ export function SystemLoader() {
 			.catch(() => setVisitorInfo({ ip: "127.0.0.1", org: "UNKNOWN_ISP", country_name: "LOCAL_HOST" }))
 	}, [])
 
+	// Keyboard ESC to dismiss the loader
+	useEffect(() => {
+		const handleKey = (e: KeyboardEvent) => {
+			if (e.key === "Escape") setIsVisible(false)
+		}
+		document.addEventListener("keydown", handleKey)
+		return () => document.removeEventListener("keydown", handleKey)
+	}, [])
+
 	useEffect(() => {
 		if (!isVisible) return
 
@@ -123,11 +132,12 @@ export function SystemLoader() {
 					{/* Bypass Button */}
 					<button 
 						onClick={() => setIsVisible(false)}
-						className="absolute top-4 right-4 sm:top-8 sm:right-8 z-[1002] flex items-center gap-1.5 sm:gap-2 px-2 py-1 sm:px-3 sm:py-1.5 bezel bg-red-500/10 border-red-500/30 text-red-500 text-[8px] sm:text-[10px] font-bold uppercase tracking-widest hover:bg-red-500/20 transition-all group"
+						aria-label="Skip boot sequence and enter site"
+						className="absolute top-4 right-4 sm:top-6 sm:right-6 z-[1002] flex items-center gap-1.5 px-2.5 py-1.5 bezel bg-red-500/10 border-red-500/30 text-red-500 text-[9px] font-bold uppercase tracking-wider hover:bg-red-500/20 transition-all group whitespace-nowrap shrink-0"
 					>
-						<span className="size-1 sm:size-1.5 rounded-full bg-red-500 animate-pulse" />
-						<span className="hidden xs:inline">Bypass_</span>Firewall
-						<span className="opacity-40 group-hover:opacity-100 transition-opacity ml-1 sm:ml-2">[ESC]</span>
+						<span className="size-1.5 rounded-full bg-red-500 animate-pulse shrink-0" />
+						<span>Bypass_Firewall</span>
+						<span className="opacity-40 group-hover:opacity-100 transition-opacity">[ESC]</span>
 					</button>
 
 					<div className="flex-1 flex flex-col justify-center p-8 md:p-24 relative z-10">

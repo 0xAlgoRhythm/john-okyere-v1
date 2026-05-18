@@ -2,15 +2,17 @@ import { create } from "zustand";
 
 interface ImageState {
   selectedImage: string | null;
-  setSelectedImage: (imageUrl: string | null) => void;
+  selectedImageAlt: string | null;
+  setSelectedImage: (imageUrl: string | null, alt?: string) => void;
   isDialogOpen: boolean;
   setDialogOpen: (isOpen: boolean) => void;
 }
 
 export const useImageStore = create<ImageState>()((set) => ({
   selectedImage: null,
-  setSelectedImage: (imageUrl: string | null) =>
-    set({ selectedImage: imageUrl }),
+  selectedImageAlt: null,
+  setSelectedImage: (imageUrl: string | null, alt?: string) =>
+    set({ selectedImage: imageUrl, selectedImageAlt: alt ?? null }),
   isDialogOpen: false,
   setDialogOpen: (isOpen: boolean) => set({ isDialogOpen: isOpen }),
 }));

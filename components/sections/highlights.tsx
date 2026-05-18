@@ -161,7 +161,7 @@ const HighlightImage = React.memo(function HighlightImage({
 	function handleClick() {
 		// Use startTransition to defer the heavy Dialog opening logic
 		startTransition(() => {
-			setSelectedImage(src)
+			setSelectedImage(src, alt)
 			setDialogOpen(true)
 		})
 	}

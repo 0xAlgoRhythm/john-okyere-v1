@@ -46,7 +46,7 @@ export function Writing() {
 						<Link
 							key={post._meta.path}
 							href={`/writing/${post._meta.path}`}
-							className="group flex flex-col sm:flex-row sm:items-center justify-between gap-2 p-3 hover:bg-emerald-500/[0.03] transition-colors"
+							className="group flex flex-col sm:flex-row sm:items-center justify-between gap-2 p-3 hover:bg-emerald-500/[0.04] hover:translate-x-0.5 transition-all duration-200"
 						>
 							<div className="flex items-center gap-4">
 								<span className="hidden sm:block font-mono text-[10px] text-muted-foreground opacity-30">
@@ -58,15 +58,16 @@ export function Writing() {
 							</div>
 							<div className="flex items-center gap-4">
 								<div className="flex-1 sm:hidden border-b border-dashed border-border/30" />
-								<div className="flex items-center gap-2 font-mono text-[10px] text-muted-foreground">
-									<span className="opacity-50">[</span>
+								{/* Date as a boxed pill */}
+								<div className="flex items-center gap-1 font-mono text-[9px] text-muted-foreground bezel px-1.5 py-0.5 bg-background/50">
+									<span className="opacity-40">[</span>
 									<time dateTime={post.date}>{formatDate(new Date(post.date))}</time>
-									<span className="opacity-50">]</span>
+									<span className="opacity-40">]</span>
 								</div>
 								<HugeiconsIcon
 									icon={ArrowUpRight03Icon}
 									size={12}
-									className="text-muted-foreground group-hover:text-emerald-500 transition-transform group-hover:-translate-y-0.5"
+									className="text-muted-foreground group-hover:text-emerald-500 transition-transform group-hover:-translate-y-0.5 shrink-0"
 								/>
 							</div>
 						</Link>
