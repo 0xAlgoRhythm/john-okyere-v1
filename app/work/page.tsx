@@ -12,7 +12,9 @@ import { Badge } from "@/components/ui/badge"
 import { SubPageNav } from "@/components/ui/sub-page-nav"
 
 export default function WorkPage() {
-	const sortedProjects = [...allWorks].sort((a, b) => a.sort - b.sort)
+	const sortedProjects = [...allWorks]
+		.filter(project => project._meta.path === "credaxis" || project._meta.path === "sui-copilot")
+		.sort((a, b) => a.sort - b.sort)
 
 	return (
 		<div className="px-6 md:px-10 py-6 md:py-8">

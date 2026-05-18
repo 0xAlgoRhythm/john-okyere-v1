@@ -26,7 +26,7 @@ const writing = defineCollection({
 const work = defineCollection({
   name: "work",
   directory: "content/work",
-  include: "credaxis.mdx",
+  include: "**/*.mdx",
   schema: z.object({
     title: z.string(),
     description: z.string(),

@@ -19,7 +19,9 @@ function getStatus(raw: string): { label: string; dot: string } {
 
 export function SelectedWork() {
 	const sortedProjects = [...allWorks].sort((a, b) => a.sort - b.sort)
-	const featuredProjects = sortedProjects.slice(0, 4)
+	const featuredProjects = sortedProjects.filter(project => 
+		project._meta.path === "credaxis" || project._meta.path === "sui-copilot"
+	)
 
 	return (
 		<SectionGrid>
@@ -56,17 +58,18 @@ export function SelectedWork() {
 									href={project.href}
 									target="_blank"
 									rel="noopener noreferrer"
-									className="relative block bezel overflow-hidden bg-accent/5 p-4 space-y-3 hover:border-cyan-500/40 hover:shadow-[0_8px_32px_-8px_rgba(0,255,255,0.15)] transition-all duration-300"
+									className="relative block bg-accent/5 border border-border/60 p-4 space-y-3 hover:border-cyan-500/40 hover:shadow-[0_8px_32px_-8px_rgba(0,255,255,0.15)] transition-all duration-300 overflow-hidden"
 								>
 									{/* Shimmer sweep on hover */}
-									<div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 shimmer pointer-events-none z-10" />
+									<div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 shimmer pointer-events-none" />
 
 									{/* Index badge */}
-									<div className="absolute top-3 right-3 font-mono text-[9px] text-muted-foreground/30 font-bold tabular-nums z-10">
+									<div className="absolute top-3 right-3 font-mono text-[9px] text-muted-foreground/30 font-bold tabular-nums">
 										{indexLabel}
 									</div>
 
-									<div className="flex items-start justify-between relative z-0">
+									{/* Title row */}
+									<div className="flex items-start justify-between">
 										<div className="flex flex-col gap-1 flex-1 min-w-0 pr-8">
 											<div className="flex items-center gap-2 font-mono text-[9px]">
 												<span className="flex items-center gap-1.5">
@@ -75,14 +78,14 @@ export function SelectedWork() {
 												</span>
 												<span className="opacity-30">•</span>
 												<span className="text-cyan-500/80 font-bold tracking-widest">
-													{project.date || "2024.X"}
+													{project.date || "2025"}
 												</span>
 											</div>
 											<h3 className="text-item-title font-bold text-foreground group-hover:text-cyan-500 transition-colors duration-200 truncate">
 												{project.title}
 											</h3>
 										</div>
-										<div className="size-7 bezel flex items-center justify-center bg-background/50 shrink-0 group-hover:border-cyan-500/50 group-hover:bg-cyan-500/5 transition-all duration-200">
+										<div className="size-7 border border-border/60 flex items-center justify-center bg-background/50 shrink-0 group-hover:border-cyan-500/50 group-hover:bg-cyan-500/5 transition-all duration-200">
 											<HugeiconsIcon
 												icon={ArrowUpRight03Icon}
 												size={14}
@@ -91,8 +94,9 @@ export function SelectedWork() {
 										</div>
 									</div>
 
+									{/* Project Image — Uniform relative aspect ratio container with Next.js fill */}
 									{project.image && (
-										<div className="relative z-[1] w-full aspect-[16/9] overflow-hidden rounded-sm">
+										<div className="relative w-full aspect-[16/9] overflow-hidden rounded-sm">
 											<Image
 												src={project.image}
 												alt={project.title}
@@ -100,12 +104,14 @@ export function SelectedWork() {
 												sizes="(max-width: 768px) 100vw, 50vw"
 												className="object-cover grayscale group-hover:grayscale-0 group-hover:scale-[1.02] transition-all duration-500"
 											/>
-											<div className="absolute inset-0 z-[2] bg-gradient-to-t from-background/80 to-transparent opacity-60 pointer-events-none" />
-											<div className="absolute bottom-3 left-3 z-[3] flex gap-2 flex-wrap">
+											{/* Gradient overlay */}
+											<div className="absolute inset-0 bg-gradient-to-t from-background/80 to-transparent opacity-60 pointer-events-none z-[2]" />
+											{/* Stack tags */}
+											<div className="absolute bottom-3 left-3 flex gap-2 flex-wrap z-[3]">
 												{project.stack?.slice(0, 3).map((tag: string, i: number) => (
 													<span
 														key={`${tag}-${i}`}
-														className="px-1.5 py-0.5 bezel bg-background/80 backdrop-blur-sm text-[8px] font-mono text-foreground tracking-tighter"
+														className="px-1.5 py-0.5 border border-border/60 bg-background/80 backdrop-blur-sm text-[8px] font-mono text-foreground tracking-tighter"
 													>
 														{tag.toUpperCase()}
 													</span>

@@ -7,7 +7,6 @@ import { Highlights } from "@/components/sections/highlights"
 import { SelectedWork } from "@/components/sections/selected-work"
 import { Writing } from "@/components/sections/writing"
 import { siteConfig } from "@/config/site"
-
 export default function Home() {
 	return (
 		<div className="px-6 md:px-10 space-y-4 md:space-y-6">
