@@ -36,19 +36,19 @@ export function SystemBar() {
 	}
 
 	return (
-		<div className="sticky top-0 z-[100] w-full border-b border-border/40 bg-background/80 backdrop-blur-md px-4 py-2 flex items-center justify-between font-mono text-[10px] tracking-widest text-muted-foreground uppercase overflow-x-auto no-scrollbar">
-			<div className="flex items-center gap-4 shrink-0">
+		<div className="sticky top-0 z-[100] w-full border-b border-border/40 bg-background/80 backdrop-blur-md px-4 py-2 flex items-center justify-between font-mono text-[10px] tracking-widest text-muted-foreground uppercase overflow-hidden">
+			<div className="flex items-center gap-2 min-w-0 shrink">
 				<TerminalTooltip metadata={{ UID: "0", GID: "0", MODE: "755", KERNEL: "OKYERE_6.1" }}>
-					<div className="flex items-center gap-2 cursor-help">
+					<div className="flex items-center gap-2 cursor-help shrink-0">
 						<div className="size-1.5 rounded-full bg-emerald-500 animate-pulse" />
 						<span className="text-foreground font-bold">OKYERE.SYS</span>
 					</div>
 				</TerminalTooltip>
-				<span className="opacity-40">/</span>
-				<span>{getPageName()}</span>
+				<span className="opacity-40 hidden xs:inline">/</span>
+				<span className="truncate hidden xs:inline max-w-[80px] sm:max-w-none">{getPageName()}</span>
 			</div>
 
-			<div className="flex items-center gap-4 sm:gap-6 shrink-0 ml-auto sm:ml-4">
+			<div className="flex items-center gap-3 sm:gap-6 shrink-0 ml-2">
 				<div className="flex items-center gap-2 sm:gap-3">
 					<span className="opacity-40 text-[7px] sm:text-[8px]">CPU:</span>
 					<div className="flex items-end gap-0.5 h-2.5 sm:h-3">
@@ -79,7 +79,7 @@ export function SystemBar() {
 				</div>
 
 				<div className="flex items-center gap-2 tabular-nums">
-					<span className="opacity-40 hidden xs:inline">UTC:</span>
+					<span className="opacity-40 hidden sm:inline">UTC:</span>
 					<span className="text-[9px] sm:text-[10px]">{time || "00:00:00"}</span>
 				</div>
 				<button

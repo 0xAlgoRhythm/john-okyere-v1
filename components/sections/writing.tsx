@@ -16,9 +16,11 @@ function formatDate(date: Date): string {
 }
 
 export function Writing() {
-	const sortedPosts = [...allWritings].sort(
-		(a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
-	)
+	const sortedPosts = [...allWritings]
+		.filter((p: any) => !p.draft)
+		.sort(
+			(a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
+		)
 	const recentPosts = sortedPosts.slice(0, 5)
 
 	if (recentPosts.length === 0) return null

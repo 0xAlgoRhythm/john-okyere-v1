@@ -89,7 +89,7 @@ export function CommandLine() {
 						animate={{ opacity: 1, y: 0 }}
 						exit={{ opacity: 0, y: 5 }}
 						className={cn(
-							"absolute top-full left-0 mt-2 p-2 bezel border text-[9px] font-mono whitespace-nowrap z-[200]",
+							"absolute top-full left-0 mt-2 p-2 bezel border text-[9px] font-mono z-[200] max-w-[min(240px,80vw)] break-words",
 							result.type === "success" && "bg-emerald-500/10 border-emerald-500/30 text-emerald-500",
 							result.type === "error" && "bg-red-500/10 border-red-500/30 text-red-500",
 							result.type === "info" && "bg-cyan-500/10 border-cyan-500/30 text-cyan-500"

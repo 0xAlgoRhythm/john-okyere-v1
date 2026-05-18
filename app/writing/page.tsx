@@ -12,9 +12,11 @@ function formatDate(date: Date): string {
 }
 
 export default function WritingPage() {
-	const sortedPosts = allWritings.sort((a, b) => {
-		return new Date(b.date).getTime() - new Date(a.date).getTime()
-	})
+	const sortedPosts = [...allWritings]
+		.filter((p: any) => !p.draft)
+		.sort((a, b) => {
+			return new Date(b.date).getTime() - new Date(a.date).getTime()
+		})
 
 	return (
 		<div className="px-6 md:px-10 py-6 md:py-8">

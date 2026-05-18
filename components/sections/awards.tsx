@@ -5,7 +5,9 @@ import { allAwards } from "content-collections"
 import { SectionGrid, SectionTitle, SectionContent } from "@/components/ui/section-grid"
 
 export function Awards() {
-	const sortedAwards = [...allAwards].sort((a, b) => a.sort - b.sort)
+	const sortedAwards = [...allAwards]
+		.filter((a: any) => !a.draft)
+		.sort((a, b) => a.sort - b.sort)
 
 	if (sortedAwards.length === 0) {
 		return null

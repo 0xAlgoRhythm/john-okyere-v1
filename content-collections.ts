@@ -12,6 +12,7 @@ const writing = defineCollection({
     date: z.string(),
     tags: z.array(z.string()).optional(),
     image: z.string().optional(),
+    draft: z.boolean().optional(),
   }),
   transform: async (document: any, { cache }: any) => {
     const mdx = await compileMDX({ cache }, document);
@@ -81,6 +82,7 @@ const awards = defineCollection({
     description: z.string().optional(),
     href: z.string().optional(),
     sort: z.number(),
+    draft: z.boolean().optional(),
   }),
 });
 

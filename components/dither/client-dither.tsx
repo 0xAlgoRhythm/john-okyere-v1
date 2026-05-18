@@ -1,18 +1,28 @@
 "use client";
 import { useTheme } from "next-themes";
+import { useState, useEffect } from "react";
 import Dither from "./dither";
 
 const ClientDither = () => {
-  const { theme } = useTheme();
+  const { resolvedTheme } = useTheme();
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  // Don't render anything until mounted — avoids hydration mismatch (React #418)
+  // because next-themes returns undefined for theme on the server.
+  if (!mounted) return null;
 
   // Theme-aware colors
 	const waveColor =
-		theme === "dark"
+		resolvedTheme === "dark"
 			? ([0.1, 0.4, 0.5] as [number, number, number]) // Electric Cyan-inspired
 			: ([0.4, 0.4, 0.5] as [number, number, number]) // Muted slate
 
 	const backgroundColor =
-		theme === "dark"
+		resolvedTheme === "dark"
 			? ([0.04, 0.04, 0.05] as [number, number, number]) // Obsidian base
 			: ([0.98, 0.98, 1.0] as [number, number, number]) // Clean white
 

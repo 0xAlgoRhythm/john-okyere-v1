@@ -136,10 +136,10 @@ export function SystemLoader() {
 								<motion.div 
 									initial={{ opacity: 0 }}
 									animate={{ opacity: 1 }}
-									className="text-cyan-500 font-bold text-xs md:text-sm tracking-[0.6em] mb-4 flex items-center gap-2"
+									className="text-cyan-500 font-bold text-[9px] md:text-sm tracking-[0.2em] md:tracking-[0.6em] mb-4 flex items-center gap-2 overflow-hidden"
 								>
-									<span className="size-2 bg-cyan-500 animate-ping rounded-full" />
-									SYSTEM_CRITICAL_BOOT_SEQUENCE
+									<span className="size-2 bg-cyan-500 animate-ping rounded-full shrink-0" />
+									<span className="truncate">SYSTEM_CRITICAL_BOOT_SEQUENCE</span>
 								</motion.div>
 								<div className="text-[36px] md:text-[72px] font-bold text-foreground leading-none tracking-tighter uppercase mb-8">
 									Okyere<span className="text-cyan-500">.Sys</span>
@@ -211,12 +211,12 @@ export function SystemLoader() {
 										className="absolute inset-0 bg-cyan-500 shadow-[0_0_25px_var(--cyan-500)]"
 									/>
 								</div>
-								<div className="flex justify-between w-full text-[10px] text-muted-foreground uppercase tracking-[0.3em] font-bold">
-									<span className="flex items-center gap-2">
+								<div className="flex items-center justify-between w-full text-[9px] sm:text-[10px] text-muted-foreground uppercase tracking-[0.1em] sm:tracking-[0.3em] font-bold gap-2 overflow-hidden">
+									<span className="flex items-center gap-1.5 shrink-0">
 										<span className="animate-spin size-2 border-t-2 border-cyan-500 rounded-full" />
 										initializing_v1.0.4
 									</span>
-									<span className="text-cyan-500">Peak_Access_Required</span>
+									<span className="text-cyan-500 truncate text-right">Peak_Access_Required</span>
 								</div>
 							</div>
 						</div>
