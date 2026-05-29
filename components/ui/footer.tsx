@@ -43,7 +43,7 @@ export function Footer() {
 				</div>
 
 				<div className="flex flex-col md:items-end gap-2">
-					<div className="flex items-center gap-2">
+					<div className="flex flex-wrap items-center gap-2">
 						<span className="opacity-70">BUILT_BY:</span>
 						<a
 							href={siteConfig.links.twitter}
@@ -52,6 +52,16 @@ export function Footer() {
 							className="text-foreground hover:text-cyan-500 transition-colors"
 						>
 							JOHN_OKYERE
+						</a>
+						<span className="opacity-30">|</span>
+						<span className="opacity-70">UI_ATTR:</span>
+						<a
+							href="https://github.com/samueldanso"
+							target="_blank"
+							rel="noopener noreferrer"
+							className="text-foreground hover:text-cyan-500 transition-colors"
+						>
+							SAMUEL_DANSO
 						</a>
 					</div>
 					{/* Live uptime counter */}

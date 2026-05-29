@@ -23,6 +23,7 @@ import {
   Github01Icon,
   Linkedin01Icon,
   TelegramIcon,
+  Book02Icon,
 } from "@hugeicons/core-free-icons";
 import { ThemeToggleIcon } from "@/components/icons";
 import { siteConfig } from "@/config/site";
@@ -83,6 +84,7 @@ export function Menu() {
 
     // Prefetch routes
     router.prefetch("/writing");
+    router.prefetch("/research");
     router.prefetch("/work");
     router.prefetch("/contact");
 
@@ -146,21 +148,29 @@ export function Menu() {
                 <span>/writing</span>
               </div>
             </Command.Item>
-            <Command.Item onSelect={() => navigate("/work")}>
+            <Command.Item onSelect={() => navigate("/research")}>
               <div className="flex items-center gap-3 text-foreground font-mono text-sm">
                 <span className="text-muted-foreground opacity-50">03</span>
+                <HugeiconsIcon icon={Book02Icon} size={14} strokeWidth={2} />
+                <span>/research</span>
+              </div>
+            </Command.Item>
+            <Command.Item onSelect={() => navigate("/work")}>
+              <div className="flex items-center gap-3 text-foreground font-mono text-sm">
+                <span className="text-muted-foreground opacity-50">04</span>
                 <HugeiconsIcon icon={Folder01Icon} size={14} strokeWidth={2} />
                 <span>/projects</span>
               </div>
             </Command.Item>
             <Command.Item onSelect={() => navigate("/contact")}>
               <div className="flex items-center gap-3 text-foreground font-mono text-sm">
-                <span className="text-muted-foreground opacity-50">04</span>
+                <span className="text-muted-foreground opacity-50">05</span>
                 <HugeiconsIcon icon={Mail01Icon} size={14} strokeWidth={2} />
                 <span>/contact</span>
               </div>
             </Command.Item>
           </Command.Group>
+
 
           <Command.Group heading="Assets">
             <Command.Item onSelect={() => navigate("/resume/resume.pdf")}>

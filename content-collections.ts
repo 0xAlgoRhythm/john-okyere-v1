@@ -86,7 +86,32 @@ const awards = defineCollection({
   }),
 });
 
+const research = defineCollection({
+  name: "research",
+  directory: "content/research",
+  include: "**/*.mdx",
+  schema: z.object({
+    title: z.string(),
+    summary: z.string(),
+    date: z.string(),
+    tags: z.array(z.string()).optional(),
+    image: z.string().optional(),
+    url: z.string().optional(),
+    pdf: z.string().optional(),
+    scholarUrl: z.string().optional(),
+    draft: z.boolean().optional(),
+  }),
+  transform: async (document: any, { cache }: any) => {
+    const mdx = await compileMDX({ cache }, document);
+    return {
+      ...document,
+      mdx,
+    };
+  },
+});
+
 export default defineConfig({
   // @ts-ignore – content-collections falsely rejects Promise<any> return types
-  collections: [writing, work, experience, awards],
+  collections: [writing, work, experience, awards, research],
 });
+

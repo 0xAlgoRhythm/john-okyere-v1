@@ -6,6 +6,7 @@ import { About } from "@/components/sections/about"
 import { Highlights } from "@/components/sections/highlights"
 import { SelectedWork } from "@/components/sections/selected-work"
 import { Writing } from "@/components/sections/writing"
+import { Research } from "@/components/sections/research"
 import { siteConfig } from "@/config/site"
 
 export default function Home() {
@@ -20,6 +21,7 @@ export default function Home() {
 			<SelectedWork />
 			<Experience />
 			<Writing />
+			<Research />
 			<Awards />
 			<Highlights />
 		</div>
