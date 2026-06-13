@@ -31,7 +31,7 @@ const spaceGrotesk = Space_Grotesk({
 export const metadata: Metadata = {
 	metadataBase: new URL(siteConfig.url),
 	title: {
-		default: siteConfig.name,
+		default: `${siteConfig.name} | ${siteConfig.title}`,
 		template: `%s - ${siteConfig.name}`,
 	},
 	description: siteConfig.description,
@@ -44,12 +44,21 @@ export const metadata: Metadata = {
 		"johnokyere",
 		"johnokyere.xyz",
 		"johnokyere portfolio",
-		"johnokyere github",
-		"johnokyere twitter",
-		"johnokyere linkedin",
+		"tech",
+		"technology",
+		"react",
+		"next.js",
+		"artificial intelligence",
+		"machine learning",
 	],
-	authors: [{ name: "John Okyere", url: "https://johnokyere.xyz" }],
-	creator: "johnokyere",
+	authors: [{ name: "John Okyere", url: siteConfig.url }],
+	creator: "John Okyere",
+	publisher: "John Okyere",
+	formatDetection: {
+		email: false,
+		address: false,
+		telephone: false,
+	},
 	openGraph: {
 		type: "website",
 		locale: "en_US",
@@ -57,6 +66,14 @@ export const metadata: Metadata = {
 		title: siteConfig.name,
 		description: siteConfig.description,
 		siteName: siteConfig.name,
+		images: [
+			{
+				url: siteConfig.ogImage,
+				width: 1200,
+				height: 630,
+				alt: siteConfig.name,
+			},
+		],
 	},
 	twitter: {
 		card: "summary_large_image",
@@ -64,11 +81,14 @@ export const metadata: Metadata = {
 		description: siteConfig.description,
 		images: [siteConfig.ogImage],
 		creator: "@0xmhiskall",
-		site: "@0xmhiskall	",	
+		site: "@0xmhiskall",
 	},
 	icons: {
 		icon: "/icon.svg",
+		shortcut: "/favicon-16x16.png",
+		apple: "/apple-touch-icon.png",
 	},
+	manifest: `${siteConfig.url}/site.webmanifest`,
 	robots: {
 		index: true,
 		follow: true,
@@ -79,6 +99,14 @@ export const metadata: Metadata = {
 			"max-image-preview": "large",
 			"max-snippet": -1,
 		},
+	},
+	alternates: {
+		canonical: siteConfig.url,
+	},
+	appleWebApp: {
+		capable: true,
+		title: siteConfig.name,
+		statusBarStyle: "black-translucent",
 	},
 }
 
@@ -101,6 +129,41 @@ export default function RootLayout({
 				className={`${inter.variable} ${mono.variable} ${spaceGrotesk.variable} min-h-screen antialiased font-sans noise-overlay selection:bg-cyan-500/30`}
 			>
 				<ThemeProvider attribute="class" defaultTheme="dark" disableTransitionOnChange>
+					<script
+						type="application/ld+json"
+						dangerouslySetInnerHTML={{
+							__html: JSON.stringify({
+								"@context": "https://schema.org",
+								"@type": "Person",
+								name: siteConfig.name,
+								url: siteConfig.url,
+								image: siteConfig.ogImage,
+								sameAs: [
+									siteConfig.links.github,
+									siteConfig.links.twitter,
+									siteConfig.links.linkedin,
+								],
+								jobTitle: "Software Engineer & AI Engineer",
+								worksFor: {
+									"@type": "Organization",
+									name: "Self-Employed",
+								},
+								description: siteConfig.description,
+							}),
+						}}
+					/>
+					<script
+						type="application/ld+json"
+						dangerouslySetInnerHTML={{
+							__html: JSON.stringify({
+								"@context": "https://schema.org",
+								"@type": "WebSite",
+								name: siteConfig.name,
+								url: siteConfig.url,
+								description: siteConfig.description,
+							}),
+						}}
+					/>
 					<SystemLoader />
 					<div className="scanline-effect" />
 					<div className="vignette" />

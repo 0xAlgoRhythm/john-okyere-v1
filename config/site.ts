@@ -2,9 +2,9 @@ export type SiteConfig = typeof siteConfig
 
 export const siteConfig = {
 	name: "John Okyere",
-	title: "Software Engineer",
+	title: "Software Engineer & AI Engineer",
 	description:
-		"Engineering high-performance AI systems, cloud infrastructure, and blockchain protocols with a focus on security and scalability.",
+		"Portfolio of John Okyere, a top-tier Software Engineer and AI Engineer specializing in high-performance artificial intelligence systems, cloud infrastructure, and Web3 blockchain protocols.",
 	url: "https://johnokyere.xyz",
 	ogImage: "https://johnokyere.xyz/opengraph-image.png",
 	links: {
