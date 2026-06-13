@@ -4,7 +4,7 @@ export const siteConfig = {
 	name: "John Okyere",
 	title: "Software Engineer & AI Engineer",
 	description:
-		"Portfolio of John Okyere, a top-tier Software Engineer and AI Engineer specializing in high-performance artificial intelligence systems, cloud infrastructure, and Web3 blockchain protocols.",
+		"Portfolio of John Okyere, a top-tier Software Engineer and AI Engineer specializing in high-performance artificial intelligence systems, cloud infrastructure, and Web3 blockchain protocols. Available for freelance contracts, consulting, and full-time software development roles.",
 	url: "https://johnokyere.xyz",
 	ogImage: "https://johnokyere.xyz/opengraph-image.png",
 	links: {
